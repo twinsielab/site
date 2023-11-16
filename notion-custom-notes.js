@@ -15,7 +15,6 @@
 
     let lastUrl = location.href;
     let currentItemId = null;
-    let isCollapsed = false;
 
     // Extract item ID from the URL
     const getItemId = () => {
@@ -30,7 +29,7 @@
     };
 
     // Update local storage
-    const updateStorage = (checked) => {
+    const updateStatus = (checked) => {
         if (!currentItemId) return;
 
         const data = getData();
@@ -41,19 +40,21 @@
 
     // Update notes in local storage
     const updateNotes = () => {
-        const notes = document.getElementById('itemNotes').value;
+        if (!currentItemId) return;
+
         const data = getData();
+        const notes = document.getElementById('itemNotes').value;
         data[currentItemId] = data[currentItemId] || { checked: false, note: '' };
         data[currentItemId].note = notes;
         localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
     };
 
    // Update status display and expand button icon
-    const updateStatus = () => {
+    const updateWidget = () => {
         currentItemId = getItemId();
         if (!currentItemId) {
             document.getElementById('statusDisplay').textContent = 'No item ID found';
-            document.getElementById('expandButton').textContent = '🗒️'; // Default icon
+            document.getElementById('expandButton').textContent = '🗒️x'; // Default icon
             return;
         }
 
@@ -152,7 +153,7 @@
             <div>
                 <label><input type="checkbox" id="checkItem"> Check <span id="statusDisplay"></span> </label>
             </div>
-            <small>[v1.0] Notes are saved locally only on your browser</small>
+            <small>Notes are saved locally only on your browser [v1.1]</small>
             <button id="collapseButton" title="Collapse">▶️</button>
         </div>
     `;
@@ -166,7 +167,7 @@
     // Event listeners
     widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
-    widget.querySelector('#checkItem').addEventListener('change', (e) => updateStorage(e.target.checked));
+    widget.querySelector('#checkItem').addEventListener('change', (e) => updateStatus(e.target.checked));
     widget.querySelector('#itemNotes').addEventListener('change', updateNotes);
 
 
@@ -227,7 +228,7 @@
                     // Attach event listeners
                     const checkbox = tempDiv.querySelector('.custom-checkbox');
                     checkbox.addEventListener('change', (e) => {
-                        updateStorageForCard(itemId, e.target.checked);
+                        updateStatusForCard(itemId, e.target.checked);
                     });
     
                     const icon = tempDiv.querySelector('.note-icon');
@@ -245,7 +246,7 @@
     
 
     // Function to update storage for a specific card
-    const updateStorageForCard = (id, checked) => {
+    const updateStatusForCard = (id, checked) => {
         const data = getData();
         data[id] = data[id] || { checked: false, note: '' };
         data[id].checked = checked;
@@ -259,7 +260,8 @@
         const currentUrl = location.href;
         if (currentUrl !== lastUrl) {
             lastUrl = currentUrl;
-            updateStatus();
+            console.log('URL Changed! Refreshing notes.');
+            updateWidget();
             enhanceItemCards();
         }
     }, 500); // Checks every second, adjust as needed
@@ -267,13 +269,7 @@
 
     // Init
     setTimeout(()=> {
-
         lastUrl = '';
-
-        // Initial update
-        updateStatus();
-        enhanceItemCards();
-
     }, 1000);
 
 })();
