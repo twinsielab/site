@@ -64,63 +64,89 @@
         document.getElementById('itemNotes').value = itemData.note;
     };
 
-    // Toggle UI collapse
-    const toggleCollapse = () => {
-        isCollapsed = !isCollapsed;
-        document.getElementById('trackerContent').style.display = isCollapsed ? 'none' : 'block';
-        document.getElementById('toggleButton').textContent = isCollapsed ? 'Notes' : 'Collapse';
-    };
 
-    // Create the floating widget
+    // CSS styles for the widget
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
     styleSheet.innerText = `
-    #itemTrackerWidget {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #f0f0f0;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        z-index: 1000;
-    }
-    #trackerHeader {
-        padding-bottom: 5px;
-        margin-bottom: 5px;
-        border-bottom: 1px solid #ddd;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    /* Add more styles as needed */
-    `;
+        #itemTrackerWidget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ffeb3b; /* Post-it yellow */
+            padding: 8px;
+            border-radius: 1px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;    
+            color: black; /* Text color */
+        }
+
+        #itemTrackerWidget .content-collapsed {
+            display: block; 
+        }
+        #itemTrackerWidget .content-opened {
+            display: none; 
+        }
+        #itemTrackerWidget.active .content-collapsed {
+            display: none; 
+        }
+        #itemTrackerWidget.active .content-opened {
+            display: block; 
+        }
+
+        #expandButton {
+            font-size: 16px;
+        }
+
+        #itemTrackerWidget .content-opened #collapseButton {
+            float: right;
+        }
+        #itemTrackerWidget button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        #itemTrackerWidget textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+        `;
     document.head.appendChild(styleSheet);
 
     // Create the floating widget
     const widget = document.createElement('div');
     widget.id = 'itemTrackerWidget';
     widget.innerHTML = `
-    <div id="trackerHeader">
-        <button id="toggleButton">Collapse</button>
-    </div>
-    <div id="trackerContent">
-        <div>
-            <label><input type="checkbox" id="checkItem"></label>
-            <span id="statusDisplay"></span>
+        <div class="content-collapsed">
+            <button id="expandButton" title="View Notes">🗒️</button>
         </div>
-        <textarea id="itemNotes" placeholder="Notes" rows="4" cols="20"></textarea>
-        <button id="saveNotes">Save</button>
-        <div>* notes are saved only locally on your browser</div>
-    </div>
+        <div class="content-opened">
+            <div>
+                📝 Page Notes <button id="collapseButton" title="Collapse">▶️</button>
+            </div>
+            <div>
+                <label><input type="checkbox" id="checkItem"> Check <span id="statusDisplay"></span> </label>
+            </div>
+            <div>
+                <textarea id="itemNotes" placeholder="Notes about this page" rows="8" cols="20"></textarea>
+            </div>
+            <small>* notes are saved only locally on your browser</small>
+        </div>
     `;
-    // Attach event listeners to the widget's elements
-    widget.querySelector('#toggleButton').addEventListener('click', toggleCollapse);
+    document.body.appendChild(widget);
+
+    // Toggle UI collapse
+    const toggleCollapse = () => {
+        widget.classList.toggle('active');
+    };
+
+    // Event listeners
+    widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
+    widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#checkItem').addEventListener('change', (e) => updateStorage(e.target.checked));
     widget.querySelector('#itemNotes').addEventListener('input', updateNotes);
-    widget.querySelector('#saveNotes').addEventListener('click', updateNotes);
-    
+
+
     document.body.appendChild(widget);
 
 
