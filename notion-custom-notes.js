@@ -46,8 +46,8 @@
         const url = new URL(window.location.href);
         const isDatabaseIndex = url.searchParams.has('p') && !url.searchParams.has('v'); // page (has 'v=' but not 'p=')
     
-        // Hide the widget if it's a database index 
-        if (!currentItemId || isDatabaseIndex) {
+        // Hide the widget if it's a database index or doesnt have id
+        if (isDatabaseIndex || !currentItemId) {
             widget.style.display = 'none';
             return;
         } else {
@@ -65,8 +65,10 @@
         const expandButton = document.getElementById('expandButton');
         if (itemData.note) {
             expandButton.textContent = '📝'; // Icon when there's a note or checked
+            expandButton.title = 'This page has notes, click to read them';
         } else {
             expandButton.textContent = '🗒️'; // Default icon
+            expandButton.title = 'Click to add notes to this page';
         }
     };
 
@@ -78,10 +80,10 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color:r rgba(255, 241, 118, 0.75); /* Post-it yellow */
+            background-color: rgba(255, 241, 118, 0.75); /* Post-it yellow */
             padding: 8px;
             border-radius: 1px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 3px 4px 5px rgba(128, 128, 128, 0.5);
             z-index: 1000;    
             color: black;
             font-family: sans-serif;
