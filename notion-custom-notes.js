@@ -190,7 +190,7 @@
             border-radius: 2px;
         }
         .custom-note-ui .note-icon {
-            cursor: help;
+            cursor: pointer;
         }
     `;
     document.head.appendChild(styleSheet2);
@@ -272,6 +272,6 @@
         updateStatus();
         enhanceItemCards();
 
-    }, 5000);
+    }, 1000);
 
 })();
