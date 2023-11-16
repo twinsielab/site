@@ -216,10 +216,12 @@
                     // Create a temporary div
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = `
-                        <label class="custom-note-ui">
-                            <input type="checkbox" class="custom-checkbox" ${itemData.checked ? 'checked' : ''}>
-                            <span class="note-icon">${iconText}</span>
-                        </label>
+                        <div class="custom-note-ui">
+                            <label>
+                                <input type="checkbox" class="custom-checkbox" ${itemData.checked ? 'checked' : ''}>
+                                <span class="note-icon">${iconText}</span>
+                            </label>
+                        </div>
                     `;
     
                     // Attach event listeners
