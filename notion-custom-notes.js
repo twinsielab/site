@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         Notion Local Notes Widget
-// @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Add notes to pages locally
-// @author       Victornpb
-// @match        https://www.tinymod.xyz/*
-// @grant        none
-// ==/UserScript==
-
 (function () {
     'use strict';
 
@@ -52,23 +42,16 @@
    // Update status display and expand button icon
     const updateWidget = () => {
 
+        currentItemId = getItemId();
         const url = new URL(window.location.href);
-        const hasPParam = url.searchParams.has('p');
-        const hasVParam = url.searchParams.has('v');
+        const isDatabaseIndex = url.searchParams.has('p') && !url.searchParams.has('v'); // page (has 'v=' but not 'p=')
     
-        // Hide the widget if it's a database index page (has 'v=' but not 'p=')
-        if (hasVParam && !hasPParam) {
+        // Hide the widget if it's a database index 
+        if (!currentItemId || isDatabaseIndex) {
             widget.style.display = 'none';
             return;
         } else {
             widget.style.display = 'block'; // Show widget for other pages
-        }    
-
-        currentItemId = getItemId();
-        if (!currentItemId) {
-            document.getElementById('statusDisplay').textContent = 'No item ID found';
-            document.getElementById('expandButton').textContent = '🗒️x';
-            return;
         }
 
         const data = getData();
@@ -80,15 +63,12 @@
 
         // Update expandButton icon based on note presence or checked state
         const expandButton = document.getElementById('expandButton');
-        if (itemData.note || itemData.checked) {
+        if (itemData.note) {
             expandButton.textContent = '📝'; // Icon when there's a note or checked
         } else {
             expandButton.textContent = '🗒️'; // Default icon
         }
     };
-
-
-
 
     // CSS styles for the widget
     const styleSheet = document.createElement("style");
@@ -98,12 +78,12 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #ffeb3b; /* Post-it yellow */
+            background-color:r rgba(255, 241, 118, 0.75); /* Post-it yellow */
             padding: 8px;
             border-radius: 1px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
             z-index: 1000;    
-            color: black; /* Text color */
+            color: black;
             font-family: sans-serif;
         }
 
@@ -161,42 +141,36 @@
         </div>
         <div class="content-opened">
             <div>
-                <textarea id="itemNotes" placeholder="Add notes about this page" rows="8" cols="20"></textarea>
+                <label><input type="checkbox" id="checkItem"><span id="statusDisplay"></span></label>
             </div>
             <div>
-                <label><input type="checkbox" id="checkItem"> Check <span id="statusDisplay"></span> </label>
+                <textarea id="itemNotes" placeholder="Add notes about this page" rows="8" cols="20"></textarea>
             </div>
-            <small>Notes are saved locally only on your browser [v1.1]</small>
-            <button id="collapseButton" title="Collapse">▶️</button>
+            <small>* Notes are saved locally on your browser</small>
+            <button id="collapseButton" title="Hide"> ▼ </button>
         </div>
     `;
-    document.body.appendChild(widget);
-
-    // Toggle UI collapse
-    const toggleCollapse = () => {
-        widget.classList.toggle('active');
-    };
-
+    
     // Event listeners
-    widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
-    widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#checkItem').addEventListener('change', (e) => updateStatus(e.target.checked));
     widget.querySelector('#itemNotes').addEventListener('input', updateNotes);
+    // Toggle UI collapse
+    const toggleCollapse = () => widget.classList.toggle('active');
+    widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
+    widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
 
 
     document.body.appendChild(widget);
 
 
     // Enhance item cards with UI elements
-
-    // CSS styles as a template string
     const styleSheet2 = document.createElement("style");
     styleSheet2.type = "text/css";
     styleSheet2.innerText = `
         .custom-note-ui {
             position: absolute;
             top: 5px;
-            right: 5px;
+            left: 5px;
             display: flex;
             align-items: center;
             background: #fff17680;
@@ -208,6 +182,14 @@
         }
     `;
     document.head.appendChild(styleSheet2);
+
+    // Function to update storage for a specific card
+    const updateStatusForCard = (id, checked) => {
+        const data = getData();
+        data[id] = data[id] || { checked: false, note: '' };
+        data[id].checked = checked;
+        localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
+    };
 
     const enhanceItemCards = () => {
         const data = getData();
@@ -225,7 +207,6 @@
     
                     // Determine the icon based on note presence or checked state
                     const itemData = data[itemId] || { checked: false, note: '' };
-                    const iconText = itemData.note || itemData.checked ? '📝' : '🗒️';
     
                     // Create a temporary div
                     const tempDiv = document.createElement('div');
@@ -233,7 +214,7 @@
                         <div class="custom-note-ui">
                             <label>
                                 <input type="checkbox" class="custom-checkbox" ${itemData.checked ? 'checked' : ''}>
-                                <span class="note-icon">${iconText}</span>
+                                <span class="note-icon" title="itemData.note ? 'This item has notes' : 'No notes'">${itemData.note ? '📝' : ''}</span>
                             </label>
                         </div>
                     `;
@@ -247,7 +228,7 @@
                     const icon = tempDiv.querySelector('.note-icon');
                     icon.title = itemData.note || 'No notes';
                     icon.addEventListener('click', () => {
-                        //alert(itemData.note); // Replace with a better UI like a modal
+                        //alert('Notes:\n' + itemData.note); // Replace with a better UI like a modal
                     });
     
                     // Append the temporary div's contents to the card
@@ -256,16 +237,6 @@
             }
         });
     };
-    
-
-    // Function to update storage for a specific card
-    const updateStatusForCard = (id, checked) => {
-        const data = getData();
-        data[id] = data[id] || { checked: false, note: '' };
-        data[id].checked = checked;
-        localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
-    };
-
 
 
     // Check for URL changes
@@ -277,12 +248,12 @@
             updateWidget();
             enhanceItemCards();
         }
-    }, 500); // Checks every second, adjust as needed
+    }, 1000); // Checks every second, adjust as needed
 
 
-    // Init
-    setTimeout(()=> {
+    // Init when loading takes longer
+    setTimeout(() => {
         lastUrl = '';
-    }, 1000);
+    }, 5000);
 
 })();
