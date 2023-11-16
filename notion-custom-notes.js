@@ -51,10 +51,23 @@
 
    // Update status display and expand button icon
     const updateWidget = () => {
+
+        const url = new URL(window.location.href);
+        const hasPParam = url.searchParams.has('p');
+        const hasVParam = url.searchParams.has('v');
+    
+        // Hide the widget if it's a database index page (has 'v=' but not 'p=')
+        if (hasVParam && !hasPParam) {
+            widget.style.display = 'none';
+            return;
+        } else {
+            widget.style.display = 'block'; // Show widget for other pages
+        }    
+
         currentItemId = getItemId();
         if (!currentItemId) {
             document.getElementById('statusDisplay').textContent = 'No item ID found';
-            document.getElementById('expandButton').textContent = '🗒️x'; // Default icon
+            document.getElementById('expandButton').textContent = '🗒️x';
             return;
         }
 
@@ -168,7 +181,7 @@
     widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#checkItem').addEventListener('change', (e) => updateStatus(e.target.checked));
-    widget.querySelector('#itemNotes').addEventListener('change', updateNotes);
+    widget.querySelector('#itemNotes').addEventListener('input', updateNotes);
 
 
     document.body.appendChild(widget);
