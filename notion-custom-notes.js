@@ -216,10 +216,10 @@
                     // Create a temporary div
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = `
-                        <div class="custom-note-ui">
+                        <label class="custom-note-ui">
                             <input type="checkbox" class="custom-checkbox" ${itemData.checked ? 'checked' : ''}>
                             <span class="note-icon">${iconText}</span>
-                        </div>
+                        </label>
                     `;
     
                     // Attach event listeners
@@ -231,7 +231,7 @@
                     const icon = tempDiv.querySelector('.note-icon');
                     icon.title = itemData.note || 'No notes';
                     icon.addEventListener('click', () => {
-                        alert(itemData.note); // Replace with a better UI like a modal
+                        //alert(itemData.note); // Replace with a better UI like a modal
                     });
     
                     // Append the temporary div's contents to the card
