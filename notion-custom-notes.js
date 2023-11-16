@@ -49,11 +49,12 @@
         localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
     };
 
-    // Update status display
+   // Update status display and expand button icon
     const updateStatus = () => {
         currentItemId = getItemId();
         if (!currentItemId) {
             document.getElementById('statusDisplay').textContent = 'No item ID found';
+            document.getElementById('expandButton').textContent = '🗒️'; // Default icon
             return;
         }
 
@@ -62,7 +63,18 @@
         const checkBox = document.getElementById('checkItem');
         checkBox.checked = itemData.checked;
         document.getElementById('itemNotes').value = itemData.note;
+        document.getElementById('statusDisplay').textContent = itemData.checked ? 'Checked' : 'Unchecked';
+
+        // Update expandButton icon based on note presence or checked state
+        const expandButton = document.getElementById('expandButton');
+        if (itemData.note || itemData.checked) {
+            expandButton.textContent = '📝'; // Icon when there's a note or checked
+        } else {
+            expandButton.textContent = '🗒️'; // Default icon
+        }
     };
+
+
 
 
     // CSS styles for the widget
@@ -79,6 +91,7 @@
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
             z-index: 1000;    
             color: black; /* Text color */
+            font-family: sans-serif;
         }
 
         #itemTrackerWidget .content-collapsed {
@@ -100,15 +113,27 @@
 
         #itemTrackerWidget .content-opened #collapseButton {
             float: right;
+            width: 24px;
+            height: 24px;
         }
         #itemTrackerWidget button {
             background: none;
             border: none;
             cursor: pointer;
         }
+        #itemTrackerWidget input {
+            width: 24px;
+            height: 24px;
+        }
         #itemTrackerWidget textarea {
             width: 100%;
-            border: 1px solid #ccc;
+            border: none;
+            background: transparent;
+            font-family: sans-serif;
+        }
+
+        #itemTrackerWidget small {
+            opacity: 0.33;
         }
         `;
     document.head.appendChild(styleSheet);
@@ -122,15 +147,13 @@
         </div>
         <div class="content-opened">
             <div>
-                📝 Page Notes <button id="collapseButton" title="Collapse">▶️</button>
+                <textarea id="itemNotes" placeholder="Add notes about this page" rows="8" cols="20"></textarea>
             </div>
             <div>
                 <label><input type="checkbox" id="checkItem"> Check <span id="statusDisplay"></span> </label>
             </div>
-            <div>
-                <textarea id="itemNotes" placeholder="Notes about this page" rows="8" cols="20"></textarea>
-            </div>
-            <small>* notes are saved only locally on your browser</small>
+            <small>* notes are saved locally only on your browser</small>
+            <button id="collapseButton" title="Collapse">▶️</button>
         </div>
     `;
     document.body.appendChild(widget);
@@ -144,7 +167,7 @@
     widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#checkItem').addEventListener('change', (e) => updateStorage(e.target.checked));
-    widget.querySelector('#itemNotes').addEventListener('input', updateNotes);
+    widget.querySelector('#itemNotes').addEventListener('change', updateNotes);
 
 
     document.body.appendChild(widget);
@@ -162,7 +185,7 @@
             right: 5px;
             display: flex;
             align-items: center;
-            background: grey;
+            background: #fff17680;
             padding: 2px 5px;
             border-radius: 2px;
         }
@@ -172,7 +195,6 @@
     `;
     document.head.appendChild(styleSheet2);
 
-
     const enhanceItemCards = () => {
         const data = getData();
         document.querySelectorAll('.notion-selectable.notion-page-block.notion-collection-item').forEach(card => {
@@ -181,40 +203,44 @@
                 const match = link.href.match(/([0-9a-f]{32})/);
                 if (match) {
                     const itemId = match[0];
-
+    
                     card.style.position = 'relative';
-
+    
                     let ui = card.querySelector('.custom-note-ui');
                     if (ui) ui.parentElement.removeChild(ui);
-
+    
+                    // Determine the icon based on note presence or checked state
+                    const itemData = data[itemId] || { checked: false, note: '' };
+                    const iconText = itemData.note || itemData.checked ? '📝' : '🗒️';
+    
                     // Create a temporary div
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = `
-                    <div class="custom-note-ui">
-                        <input type="checkbox" class="custom-checkbox" ${data[itemId]?.checked ? 'checked' : ''}>
-                        <span class="note-icon">📝</span>
-                    </div>
-                `;
-
+                        <div class="custom-note-ui">
+                            <input type="checkbox" class="custom-checkbox" ${itemData.checked ? 'checked' : ''}>
+                            <span class="note-icon">${iconText}</span>
+                        </div>
+                    `;
+    
                     // Attach event listeners
                     const checkbox = tempDiv.querySelector('.custom-checkbox');
                     checkbox.addEventListener('change', (e) => {
                         updateStorageForCard(itemId, e.target.checked);
                     });
-
+    
                     const icon = tempDiv.querySelector('.note-icon');
-                    icon.title = data[itemId]?.note || 'No notes';
+                    icon.title = itemData.note || 'No notes';
                     icon.addEventListener('click', () => {
-                        alert(data[itemId].note); // Replace with a better UI like a modal
+                        alert(itemData.note); // Replace with a better UI like a modal
                     });
-
-
+    
                     // Append the temporary div's contents to the card
                     card.appendChild(tempDiv.firstElementChild);
                 }
             }
         });
     };
+    
 
     // Function to update storage for a specific card
     const updateStorageForCard = (id, checked) => {
@@ -236,8 +262,16 @@
         }
     }, 500); // Checks every second, adjust as needed
 
-    // Initial update
-    updateStatus();
-    enhanceItemCards();
+
+    // Init
+    setTimeout(()=> {
+
+        lastUrl = '';
+
+        // Initial update
+        updateStatus();
+        enhanceItemCards();
+
+    }, 5000);
 
 })();
