@@ -37,7 +37,6 @@
         data[currentItemId] = data[currentItemId] || { checked: false, note: '' };
         data[currentItemId].checked = checked;
         localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
-        updateStatus();
     };
 
     // Update notes in local storage
@@ -134,6 +133,7 @@
 
         #itemTrackerWidget small {
             opacity: 0.33;
+            font-size: 9pt;
         }
         `;
     document.head.appendChild(styleSheet);
@@ -152,7 +152,7 @@
             <div>
                 <label><input type="checkbox" id="checkItem"> Check <span id="statusDisplay"></span> </label>
             </div>
-            <small>* notes are saved locally only on your browser</small>
+            <small>[v1.0] Notes are saved locally only on your browser</small>
             <button id="collapseButton" title="Collapse">▶️</button>
         </div>
     `;
