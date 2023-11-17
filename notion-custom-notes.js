@@ -269,7 +269,7 @@
     };
 
     function openManageDataPopup() {
-        const managerWindow = window.open('', '_blank', 'width=800,height=1024');
+        const managerWindow = window.open('', 'notes_manager', 'width=800,height=1024');
         const LOCALSTORAGE = 'LOCALNOTES_WIDGET'; // Ensure this is the same key used in your localStorage
 
         // Function to get data from localStorage
