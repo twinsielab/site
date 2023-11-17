@@ -294,6 +294,7 @@
                     margin: 5px;
                     padding: 10px 10px;
                     min-width: 100px;
+                    vertical-align: bottom;
                 }
                 button {
                     margin: 5px;
@@ -337,6 +338,7 @@
                 
                 </style>
                 <header>
+                    <span style="font-size: 36px; display: inline-block;">🗒️</span>
                     <input type="file" id="importData" style="display:none;" accept=".notes"/>
                     <button id="importButton">⬇️ Import</button>
                     <button id="exportData">⬆️ Export</button>
