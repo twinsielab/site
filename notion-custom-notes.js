@@ -118,7 +118,8 @@
             border: none;
             cursor: pointer;
         }
-        #itemTrackerWidget input {
+        #itemTrackerWidget input[type="checkbox"] {
+            vertical-align: middle;
             width: 24px;
             height: 24px;
         }
@@ -144,13 +145,11 @@
             <button id="expandButton" title="View Notes">🗒️</button>
         </div>
         <div class="content-opened">
-            <div>
-                <label><input type="checkbox" id="checkItem"><span id="statusDisplay"></span></label>
+            <div style="display:flex; flex-direction: row;">
+                <label><input type="checkbox" id="checkItem"><span id="statusDisplay" style="display:none;"></span></label>
+                <textarea id="itemNotes" placeholder="Add notes to this page" rows="8" cols="20"></textarea>
             </div>
-            <div>
-                <textarea id="itemNotes" placeholder="Add notes about this page" rows="8" cols="20"></textarea>
-            </div>
-            <small>* Notes are saved locally on your browser</small>
+            <footer><small>* Notes are saved locally on your browser</small></footer>
             <button id="collapseButton" title="Hide"> 🔽 </button>
         </div>
     `;
