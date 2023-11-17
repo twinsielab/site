@@ -314,7 +314,7 @@
                 
                 </style>
                 <header>
-                    <input type="file" id="importData" style="display:none;" accept=".json"/>
+                    <input type="file" id="importData" style="display:none;" accept=".notes"/>
                     <button id="importButton">⬇️ Import</button>
                     <button id="exportData">⬆️ Export</button>
                     <button id="refreshData">🔄 Refresh</button>
@@ -371,16 +371,21 @@
         };
 
         const exportData = () => {
-            const dataString = JSON.stringify(getData(), null, 2);
+            const dataString = JSON.stringify(getData(), null, '\t');
             const blob = new Blob([dataString], { type: 'application/json' });
+        
+            const siteName = window.location.hostname;
+            const dateTime = new Date().toISOString().replace(/[\-\:\.]/g, '-');
+            const fileName = `Exported_${siteName}.notes`;
+        
             const url = URL.createObjectURL(blob);
             const a = managerWindow.document.createElement('a');
             a.href = url;
-            a.download = 'exported_data.json';
+            a.download = fileName;
             a.click();
             URL.revokeObjectURL(url);
         };
-
+        
         const importData = (event) => {
             const file = event.target.files[0];
             if (file) {
