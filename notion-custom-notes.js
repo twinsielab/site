@@ -39,13 +39,13 @@
         localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
     };
 
-   // Update status display and expand button icon
+    // Update status display and expand button icon
     const updateWidget = () => {
 
         currentItemId = getItemId();
         const url = new URL(window.location.href);
         const isDatabaseIndex = url.searchParams.has('v') && !url.searchParams.has('p'); // page (has 'v=' but not 'p=')
-    
+
         // Hide the widget if it's a database index or doesnt have id
         if (isDatabaseIndex || !currentItemId) {
             widget.style.display = 'none';
@@ -150,21 +150,22 @@
                 <textarea id="itemNotes" placeholder="Add notes to this page" rows="8" cols="20"></textarea>
             </div>
             <footer>
-                <button id="helpButton" title="Help"> ? </button>
-                <button id="collapseButton" title="Hide"> 🔽 </button>
+                <button id="manageButton" title="Manage All notes">Manage notes</button>
+                <button id="helpButton" title="Help">?</button>
+                <button id="collapseButton" title="Hide">🔽</button>
             </footer>
         </div>
     `;
-    
+
+    const toggleCollapse = () => widget.classList.toggle('active');
+
     // Event listeners
     widget.querySelector('#checkItem').addEventListener('change', (e) => updateStatus(e.target.checked));
     widget.querySelector('#itemNotes').addEventListener('input', updateNotes);
-    // Toggle UI collapse
-    const toggleCollapse = () => widget.classList.toggle('active');
     widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
+    widget.querySelector('#manageButton').addEventListener('click', openManageDataPopup);
     widget.querySelector('#helpButton').addEventListener('click', () => alert('You can use this widget to take notes about any information on this website, and you can use it for tracking items as you work on the project.\nIt Works on any page on the entire website.\nAll the information is only stored locally on your browser. Clearing your browser history deletes this data.'));
-
 
     document.body.appendChild(widget);
 
@@ -205,15 +206,15 @@
                 const match = link.href.match(/([0-9a-f]{32})/);
                 if (match) {
                     const itemId = match[0];
-    
+
                     card.style.position = 'relative';
-    
+
                     let ui = card.querySelector('.custom-note-ui');
                     if (ui) ui.parentElement.removeChild(ui);
-    
+
                     // Determine the icon based on note presence or checked state
                     const itemData = data[itemId] || { checked: false, note: '' };
-    
+
                     // Create a temporary div
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = `
@@ -224,19 +225,19 @@
                             </label>
                         </div>
                     `;
-    
+
                     // Attach event listeners
                     const checkbox = tempDiv.querySelector('.custom-checkbox');
                     checkbox.addEventListener('change', (e) => {
                         updateStatusForCard(itemId, e.target.checked);
                     });
-    
+
                     const icon = tempDiv.querySelector('.note-icon');
                     icon.title = itemData.note || 'No notes';
                     icon.addEventListener('click', () => {
                         //alert('Notes:\n' + itemData.note); // Replace with a better UI like a modal
                     });
-    
+
                     // Append the temporary div's contents to the card
                     card.appendChild(tempDiv.firstElementChild);
                 }
@@ -244,98 +245,122 @@
         });
     };
 
+    function openManageDataPopup() {
+        const managerWindow = window.open('', '_blank', 'width=800,height=800');
+        const LOCALSTORAGE = 'LOCALNOTES_WIDGET'; // Ensure this is the same key used in your localStorage
 
-function openDataWindow() {
-    const dataWindow = window.open('', '_blank', 'width=800,height=600');
+        // Function to get data from localStorage
+        const getData = () => JSON.parse(localStorage.getItem(LOCALSTORAGE) || '{}');
 
-    const updateDataWindowContent = () => {
-        const data = getData();
-        let htmlContent = `
-            <button id="exportData">Export</button>
-            <input type="file" id="importData" style="display:none;" accept=".json"/>
-            <button id="importButton">Import</button>
-            <button id="clearAll">Clear All Data</button>
-            <table border="1"><tr><th>ID</th><th>Checked</th><th>Note</th><th>Action</th></tr>`;
+        // Function to update storage
+        const updateStorage = (data) => {
+            localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
+        };
 
-        Object.entries(data).forEach(([id, { checked, note }]) => {
-            htmlContent += `
-                <tr>
-                    <td><a href="${window.location.origin}/${id}" target="_blank">${id}</a></td>
-                    <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
-                    <td><textarea disabled>${note}</textarea></td>
-                    <td><button onclick="window.opener.deleteEntry('${id}', window)">Delete</button></td>
-                </tr>`;
-        });
+        // Function to update the content of the manager window
+        const updateDataWindowContent = () => {
+            let htmlContent = `
+                <style></style>
+                <input type="file" id="importData" style="display:none;" accept=".json"/>
+                <button id="importButton">Import</button>
+                <button id="exportData">Export</button>
+                <button id="clearAll">Clear All Data</button>
 
-        htmlContent += '</table>';
-        dataWindow.document.body.innerHTML = htmlContent;
-    };
+                <table border="1">
+                    <tr>
+                        <th>Checked</th>
+                        <th>Note</th>
+                        <th>Action</th>
+                        <th>Link</th>
+                    </tr>
+            `;
 
-    updateDataWindowContent();
+            const data = getData();
+            Object.entries(data).forEach(([id, { checked, note }]) => {
+                htmlContent += `
+                    <tr data-id="${id}">
+                        <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
+                        <td><textarea disabled>${note}</textarea></td>
+                        <td>
+                            <button class="viewButton">View</button>
+                            <button class="deleteButton">Delete</button>
+                        </td>
+                        <td><a href="${window.location.origin}/${id}" target="_blank">${window.location.origin}/${id}</a></td>
+                    </tr>`;
+            });
 
-    // Export functionality
-    dataWindow.document.getElementById('exportData').onclick = function() {
-        const dataString = JSON.stringify(getData(), null, 2);
-        const blob = new Blob([dataString], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = dataWindow.document.createElement('a');
-        a.href = url;
-        a.download = 'exported_data.json';
-        a.click();
-        URL.revokeObjectURL(url);
-    };
+            htmlContent += '</table>';
+            managerWindow.document.body.innerHTML = htmlContent;
 
-    // Import functionality
-    const importInput = dataWindow.document.getElementById('importData');
-    dataWindow.document.getElementById('importButton').onclick = function() {
-        importInput.click();
-    };
+            const $ = (s) => managerWindow.document.querySelector(s);
 
-    importInput.onchange = e => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const importedData = JSON.parse(e.target.result);
-                    localStorage.setItem(LOCALSTORAGE, JSON.stringify(importedData));
-                    dataWindow.alert('Data imported successfully.');
-                    updateDataWindowContent();
-                } catch (error) {
-                    dataWindow.alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
+            // Attach event listeners
+            $('#importData').addEventListener('change', importData);
+            $('#importButton').addEventListener('click', () => $('#importData').click());
+            $('#exportData').addEventListener('click', exportData);
+            $('#clearAll').addEventListener('click', clearAllData);
+            $('table').addEventListener('click', function (event) {
+                if (event.target.className === 'viewButton') {
+                    const id = event.target.closest('tr').getAttribute('data-id');
+                    managerWindow.open(`${window.location.origin}/${id}`, 'view', 'width=600,height=800,left=800');
                 }
-            };
-            reader.readAsText(file);
-        }
-    };
+            });
+            $('table').addEventListener('click', function (event) {
+                if (event.target.className === 'deleteButton') {
+                    const id = event.target.closest('tr').getAttribute('data-id');
+                    deleteEntry(id);
+                }
+            });
+        };
 
-    // Clear all data functionality
-    dataWindow.document.getElementById('clearAll').onclick = function() {
-        if (dataWindow.confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
-            localStorage.setItem(LOCALSTORAGE, JSON.stringify({}));
-            dataWindow.alert('All data has been cleared.');
-            updateDataWindowContent();
-        }
-    };
-}
+        const exportData = () => {
+            const dataString = JSON.stringify(getData(), null, 2);
+            const blob = new Blob([dataString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = managerWindow.document.createElement('a');
+            a.href = url;
+            a.download = 'exported_data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
 
-// Delete a specific entry
-function deleteEntry(id, dataWindow) {
-    if (dataWindow.confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
-        const data = getData();
-        delete data[id];
-        localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
-        dataWindow.updateDataWindowContent();
+        const importData = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        updateStorage(importedData);
+                        managerWindow.alert('Data imported successfully.');
+                        updateDataWindowContent();
+                    } catch (error) {
+                        managerWindow.alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        };
+
+        const clearAllData = () => {
+            if (managerWindow.confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+                updateStorage({});
+                managerWindow.alert('All data has been cleared.');
+                updateDataWindowContent();
+            }
+        };
+
+        const deleteEntry = (id) => {
+            if (managerWindow.confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
+                const data = getData();
+                delete data[id];
+                updateStorage(data);
+                updateDataWindowContent();
+            }
+        };
+
+        updateDataWindowContent();
     }
-}
-
-    // Add a button in the floating widget for managing data
-const manageDataButton = document.createElement('button');
-manageDataButton.textContent = 'Manage Data';
-manageDataButton.addEventListener('click', openDataWindow);
-widget.querySelector('.content-opened').appendChild(manageDataButton);
-    
-
 
 
     // Check for URL changes
