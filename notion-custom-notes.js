@@ -246,7 +246,7 @@
     };
 
     function openManageDataPopup() {
-        const managerWindow = window.open('', '_blank', 'width=800,height=800');
+        const managerWindow = window.open('', '_blank', 'width=800,height=1024');
         const LOCALSTORAGE = 'LOCALNOTES_WIDGET'; // Ensure this is the same key used in your localStorage
 
         // Function to get data from localStorage
@@ -259,14 +259,68 @@
 
         // Function to update the content of the manager window
         const updateDataWindowContent = () => {
-            let htmlContent = `
-                <style></style>
-                <input type="file" id="importData" style="display:none;" accept=".json"/>
-                <button id="importButton">Import</button>
-                <button id="exportData">Export</button>
-                <button id="clearAll">Clear All Data</button>
-
-                <table border="1">
+            const newLocal = `
+                <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 10px;
+                    background-color: #121212; /* Dark background */
+                    color: #e0e0e0; /* Lighter text for readability */
+                }
+                header button {
+                    margin: 5px;
+                    padding: 10px 10px;
+                    min-width: 100px;
+                }
+                button {
+                    margin: 5px;
+                    padding: 5px 10px;
+                    background-color: #37474F; /* Darker buttons */
+                    color: white;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+                .danger {
+                    background-color: #c62828; /* Keep danger button red for warning */
+                }
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-top: 10px;
+                }
+                th, td {
+                    border: 1px solid #333; /* Darker borders for cells */
+                    padding: 3px;
+                    text-align: left;
+                    background-color: #1e1e1e; /* Darker cells */
+                    color: #e0e0e0; /* Lighter text */
+                }
+                th {
+                    background-color: #2c2c2c; /* Even darker header cells */
+                }
+                td textarea {
+                    min-height: 5em;
+                    resize: vertical;
+                    background-color: #2c2c2c; /* Darker text area background */
+                    border: none;
+                    color: #e0e0e0; /* Lighter text color for readability */
+                }
+                a {
+                    font-size: 9pt;
+                    word-break: break-all;
+                    color: #80cbc4; /* Lighter link color for visibility */
+                }
+                
+                </style>
+                <header>
+                    <input type="file" id="importData" style="display:none;" accept=".json"/>
+                    <button id="importButton">⬇️ Import</button>
+                    <button id="exportData">⬆️ Export</button>
+                    <button id="refreshData">🔄 Refresh</button>
+                    <button id="clearAll" class="danger">🗑️ Clear All Data</button>
+                </header>
+                <table>
                     <tr>
                         <th>Checked</th>
                         <th>Note</th>
@@ -274,16 +328,17 @@
                         <th>Link</th>
                     </tr>
             `;
+            let htmlContent = newLocal;
 
             const data = getData();
             Object.entries(data).forEach(([id, { checked, note }]) => {
                 htmlContent += `
                     <tr data-id="${id}">
-                        <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
-                        <td><textarea disabled>${note}</textarea></td>
+                        <td>${checked ? '✅' : '⬜️'}</td>
+                        <td><textarea cols="25" rows="4" disabled>${note}</textarea></td>
                         <td>
-                            <button class="viewButton">View</button>
-                            <button class="deleteButton">Delete</button>
+                            <button class="viewButton" title="View / Edit">↗️ View</button>
+                            <button class="deleteButton" title="Delete">⛔️</button>
                         </td>
                         <td><a href="${window.location.origin}/${id}" target="_blank">${window.location.origin}/${id}</a></td>
                     </tr>`;
@@ -291,18 +346,20 @@
 
             htmlContent += '</table>';
             managerWindow.document.body.innerHTML = htmlContent;
+            managerWindow.document.title = 'Notes Manager';
 
-            const $ = (s) => managerWindow.document.querySelector(s);
 
             // Attach event listeners
+            const $ = (s) => managerWindow.document.querySelector(s);
             $('#importData').addEventListener('change', importData);
             $('#importButton').addEventListener('click', () => $('#importData').click());
             $('#exportData').addEventListener('click', exportData);
+            $('#refreshData').addEventListener('click', updateDataWindowContent);
             $('#clearAll').addEventListener('click', clearAllData);
             $('table').addEventListener('click', function (event) {
                 if (event.target.className === 'viewButton') {
                     const id = event.target.closest('tr').getAttribute('data-id');
-                    managerWindow.open(`${window.location.origin}/${id}`, 'view', 'width=600,height=800,left=800');
+                    managerWindow.open(`${window.location.origin}/${id}`, 'view', 'width=800,height=1024,left=800');
                 }
             });
             $('table').addEventListener('click', function (event) {
