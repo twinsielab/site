@@ -109,13 +109,9 @@
         }
 
         #itemTrackerWidget .content-opened #collapseButton {
-            float: right;
-            width: 24px;
-            height: 24px;
+            -float: right;
         }
         #itemTrackerWidget button {
-            background: none;
-            border: none;
             cursor: pointer;
         }
         #itemTrackerWidget input[type="checkbox"] {
@@ -154,7 +150,6 @@
                 <textarea id="itemNotes" placeholder="Add notes to this page" rows="8" cols="20"></textarea>
             </div>
             <footer>
-                <small>* Notes are saved locally on your browser</small>
                 <button id="helpButton" title="Help"> ? </button>
                 <button id="collapseButton" title="Hide"> 🔽 </button>
             </footer>
@@ -250,20 +245,37 @@
     };
 
 
-
-    function openDataWindow() {
-    const dataWindow = window.open('', '_blank', 'width=600,height=600');
+function openDataWindow() {
+    const dataWindow = window.open('', '_blank', 'width=800,height=600');
     const data = getData();
-    const dataString = JSON.stringify(data, null, 2);
 
-    dataWindow.document.write('<pre>' + dataString + '</pre>');
-    dataWindow.document.write('<button id="exportData">Export</button>');
-    dataWindow.document.write('<input type="file" id="importData" style="display:none;" accept=".json"/>');
-    dataWindow.document.write('<button id="importButton">Import</button>');
+    let htmlContent = '<table border="1"><tr><th>ID</th><th>Checked</th><th>Note</th><th>Action</th></tr>';
+
+    Object.entries(data).forEach(([id, { checked, note }]) => {
+        htmlContent += `
+            <tr>
+                <td><a href="${window.location.origin}/${id}" target="_blank">${id}</a></td>
+                <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
+                <td><textarea disabled>${note}</textarea></td>
+                <td><button onclick="deleteEntry('${id}')">Delete</button></td>
+            </tr>
+        `;
+    });
+    htmlContent += '</table>';
+
+    htmlContent += `
+        <button id="exportData">Export</button>
+        <input type="file" id="importData" style="display:none;" accept=".json"/>
+        <button id="importButton">Import</button>
+        <button id="clearAll">Clear All Data</button>
+    `;
+
+    dataWindow.document.write(htmlContent);
     dataWindow.document.close();
 
     // Export functionality
     dataWindow.document.getElementById('exportData').onclick = function() {
+        const dataString = JSON.stringify(getData(), null, 2);
         const blob = new Blob([dataString], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = dataWindow.document.createElement('a');
@@ -288,7 +300,6 @@
                     const importedData = JSON.parse(e.target.result);
                     localStorage.setItem(LOCALSTORAGE, JSON.stringify(importedData));
                     alert('Data imported successfully.');
-                    // Refresh data view
                     dataWindow.location.reload();
                 } catch (error) {
                     alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
@@ -297,13 +308,33 @@
             reader.readAsText(file);
         }
     };
+
+    // Clear all data functionality
+    dataWindow.document.getElementById('clearAll').onclick = function() {
+        if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+            localStorage.setItem(LOCALSTORAGE, JSON.stringify({}));
+            alert('All data has been cleared.');
+            dataWindow.location.reload();
+        }
+    };
+
+    // Delete a specific entry
+    dataWindow.deleteEntry = function(id) {
+        if (confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
+            const data = getData();
+            delete data[id];
+            localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
+            dataWindow.location.reload();
+        }
+    };
 }
 
-// Add a button in the floating widget for managing data
+    // Add a button in the floating widget for managing data
 const manageDataButton = document.createElement('button');
 manageDataButton.textContent = 'Manage Data';
 manageDataButton.addEventListener('click', openDataWindow);
 widget.querySelector('.content-opened').appendChild(manageDataButton);
+    
 
 
 
