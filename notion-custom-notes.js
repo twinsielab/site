@@ -71,7 +71,7 @@
             expandButton.title = 'Click to add notes to this page';
         }
 
-        if (item.note || item.checked) widget.classList.add('active'); // auto open if it has stuff
+        if (itemData.note || itemData.checked) widget.classList.add('active'); // auto open if it has stuff
     };
 
     // CSS styles for the widget
