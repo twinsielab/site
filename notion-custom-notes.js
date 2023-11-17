@@ -44,7 +44,7 @@
 
         currentItemId = getItemId();
         const url = new URL(window.location.href);
-        const isDatabaseIndex = url.searchParams.has('p') && !url.searchParams.has('v'); // page (has 'v=' but not 'p=')
+        const isDatabaseIndex = url.searchParams.has('v') && !url.searchParams.has('p'); // page (has 'v=' but not 'p=')
     
         // Hide the widget if it's a database index or doesnt have id
         if (isDatabaseIndex || !currentItemId) {
@@ -70,6 +70,8 @@
             expandButton.textContent = '🗒️'; // Default icon
             expandButton.title = 'Click to add notes to this page';
         }
+
+        if (item.note || item.checked) widget.classList.add('active'); // auto open if it has stuff
     };
 
     // CSS styles for the widget
@@ -149,7 +151,7 @@
                 <textarea id="itemNotes" placeholder="Add notes about this page" rows="8" cols="20"></textarea>
             </div>
             <small>* Notes are saved locally on your browser</small>
-            <button id="collapseButton" title="Hide"> ▼ </button>
+            <button id="collapseButton" title="Hide"> 🔽 </button>
         </div>
     `;
     
