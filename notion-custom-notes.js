@@ -45,9 +45,11 @@
         currentItemId = getItemId();
         const url = new URL(window.location.href);
         const isDatabaseIndex = url.searchParams.has('v') && !url.searchParams.has('p'); // page (has 'v=' but not 'p=')
+        
+        widget.classList.toggle('db', isDatabaseIndex);
 
         // Hide the widget if it's a database index or doesnt have id
-        if (isDatabaseIndex || !currentItemId) {
+        if (!currentItemId) {
             widget.style.display = 'none';
             return;
         } else {
@@ -104,8 +106,25 @@
             display: block; 
         }
 
+        #itemTrackerWidget .viewing-db {
+            display: none;
+        }
+        #itemTrackerWidget.db .note-content {
+            display: none !important; 
+        }
+        #itemTrackerWidget.db .viewing-db {
+            display: block;
+            font-size: 10pt;
+            padding: 1em 0.5em;
+        }
+        
+
         #expandButton {
-            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: transparent;
+            font-size: 24px;
         }
 
         #itemTrackerWidget .content-opened #collapseButton {
@@ -145,14 +164,18 @@
             <button id="expandButton" title="View Notes">🗒️</button>
         </div>
         <div class="content-opened">
-            <div style="display:flex; flex-direction: row;">
+            <div class="note-content" style="display:flex; flex-direction: row;">
                 <label><input type="checkbox" id="checkItem"><span id="statusDisplay" style="display:none;"></span></label>
                 <textarea id="itemNotes" placeholder="Add notes to this page" rows="8" cols="20"></textarea>
             </div>
+            <div class="viewing-db">
+                You're viewing a database,<br>
+                click on an item to view the notes.
+            </div>
             <footer>
                 <button id="manageButton" title="Manage All notes">Manage notes</button>
-                <button id="helpButton" title="Help">?</button>
-                <button id="collapseButton" title="Hide">🔽</button>
+                <button id="helpButton" title="What is this?">?</button>
+                <button id="collapseButton" title="Hide">▾</button>
             </footer>
         </div>
     `;
