@@ -299,10 +299,10 @@ function openDataWindow() {
                 try {
                     const importedData = JSON.parse(e.target.result);
                     localStorage.setItem(LOCALSTORAGE, JSON.stringify(importedData));
-                    alert('Data imported successfully.');
+                    dataWindow.alert('Data imported successfully.');
                     dataWindow.location.reload();
                 } catch (error) {
-                    alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
+                    dataWindow.alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
                 }
             };
             reader.readAsText(file);
@@ -311,16 +311,16 @@ function openDataWindow() {
 
     // Clear all data functionality
     dataWindow.document.getElementById('clearAll').onclick = function() {
-        if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+        if (dataWindow.confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
             localStorage.setItem(LOCALSTORAGE, JSON.stringify({}));
-            alert('All data has been cleared.');
+            dataWindow.alert('All data has been cleared.');
             dataWindow.location.reload();
         }
     };
 
     // Delete a specific entry
     dataWindow.deleteEntry = function(id) {
-        if (confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
+        if (dataWindow.confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
             const data = getData();
             delete data[id];
             localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
