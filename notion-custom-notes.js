@@ -130,7 +130,11 @@
             font-family: sans-serif;
         }
 
-        #itemTrackerWidget small {
+        #itemTrackerWidget footer {
+            text-align: right;
+        }
+        
+        #itemTrackerWidget footer small {
             opacity: 0.33;
             font-size: 9pt;
         }
@@ -149,8 +153,11 @@
                 <label><input type="checkbox" id="checkItem"><span id="statusDisplay" style="display:none;"></span></label>
                 <textarea id="itemNotes" placeholder="Add notes to this page" rows="8" cols="20"></textarea>
             </div>
-            <footer><small>* Notes are saved locally on your browser</small></footer>
-            <button id="collapseButton" title="Hide"> 🔽 </button>
+            <footer>
+                <small>* Notes are saved locally on your browser</small>
+                <button id="helpButton" title="Help"> ? </button>
+                <button id="collapseButton" title="Hide"> 🔽 </button>
+            </footer>
         </div>
     `;
     
@@ -161,6 +168,7 @@
     const toggleCollapse = () => widget.classList.toggle('active');
     widget.querySelector('#collapseButton').addEventListener('click', toggleCollapse);
     widget.querySelector('#expandButton').addEventListener('click', toggleCollapse);
+    widget.querySelector('#helpButton').addEventListener('click', () => alert('You can use this widget to take notes about any information on this website, and you can use it for tracking items as you work on the project.\nIt Works on any page on the entire website.\nAll the information is only stored locally on your browser. Clearing your browser history deletes this data.'));
 
 
     document.body.appendChild(widget);
