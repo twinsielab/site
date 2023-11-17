@@ -247,31 +247,31 @@
 
 function openDataWindow() {
     const dataWindow = window.open('', '_blank', 'width=800,height=600');
-    const data = getData();
 
-    let htmlContent = '<table border="1"><tr><th>ID</th><th>Checked</th><th>Note</th><th>Action</th></tr>';
+    const updateDataWindowContent = () => {
+        const data = getData();
+        let htmlContent = `
+            <button id="exportData">Export</button>
+            <input type="file" id="importData" style="display:none;" accept=".json"/>
+            <button id="importButton">Import</button>
+            <button id="clearAll">Clear All Data</button>
+            <table border="1"><tr><th>ID</th><th>Checked</th><th>Note</th><th>Action</th></tr>`;
 
-    Object.entries(data).forEach(([id, { checked, note }]) => {
-        htmlContent += `
-            <tr>
-                <td><a href="${window.location.origin}/${id}" target="_blank">${id}</a></td>
-                <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
-                <td><textarea disabled>${note}</textarea></td>
-                <td><button onclick="deleteEntry('${id}')">Delete</button></td>
-            </tr>
-        `;
-    });
-    htmlContent += '</table>';
+        Object.entries(data).forEach(([id, { checked, note }]) => {
+            htmlContent += `
+                <tr>
+                    <td><a href="${window.location.origin}/${id}" target="_blank">${id}</a></td>
+                    <td><input type="checkbox" ${checked ? 'checked' : ''} disabled></td>
+                    <td><textarea disabled>${note}</textarea></td>
+                    <td><button onclick="window.opener.deleteEntry('${id}', window)">Delete</button></td>
+                </tr>`;
+        });
 
-    htmlContent += `
-        <button id="exportData">Export</button>
-        <input type="file" id="importData" style="display:none;" accept=".json"/>
-        <button id="importButton">Import</button>
-        <button id="clearAll">Clear All Data</button>
-    `;
+        htmlContent += '</table>';
+        dataWindow.document.body.innerHTML = htmlContent;
+    };
 
-    dataWindow.document.write(htmlContent);
-    dataWindow.document.close();
+    updateDataWindowContent();
 
     // Export functionality
     dataWindow.document.getElementById('exportData').onclick = function() {
@@ -300,7 +300,7 @@ function openDataWindow() {
                     const importedData = JSON.parse(e.target.result);
                     localStorage.setItem(LOCALSTORAGE, JSON.stringify(importedData));
                     dataWindow.alert('Data imported successfully.');
-                    dataWindow.location.reload();
+                    updateDataWindowContent();
                 } catch (error) {
                     dataWindow.alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
                 }
@@ -314,19 +314,19 @@ function openDataWindow() {
         if (dataWindow.confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
             localStorage.setItem(LOCALSTORAGE, JSON.stringify({}));
             dataWindow.alert('All data has been cleared.');
-            dataWindow.location.reload();
+            updateDataWindowContent();
         }
     };
+}
 
-    // Delete a specific entry
-    dataWindow.deleteEntry = function(id) {
-        if (dataWindow.confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
-            const data = getData();
-            delete data[id];
-            localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
-            dataWindow.location.reload();
-        }
-    };
+// Delete a specific entry
+function deleteEntry(id, dataWindow) {
+    if (dataWindow.confirm(`Are you sure you want to delete the entry for ID ${id}?`)) {
+        const data = getData();
+        delete data[id];
+        localStorage.setItem(LOCALSTORAGE, JSON.stringify(data));
+        dataWindow.updateDataWindowContent();
+    }
 }
 
     // Add a button in the floating widget for managing data
