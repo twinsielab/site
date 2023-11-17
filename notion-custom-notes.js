@@ -250,6 +250,63 @@
     };
 
 
+
+    function openDataWindow() {
+    const dataWindow = window.open('', '_blank', 'width=600,height=600');
+    const data = getData();
+    const dataString = JSON.stringify(data, null, 2);
+
+    dataWindow.document.write('<pre>' + dataString + '</pre>');
+    dataWindow.document.write('<button id="exportData">Export</button>');
+    dataWindow.document.write('<input type="file" id="importData" style="display:none;" accept=".json"/>');
+    dataWindow.document.write('<button id="importButton">Import</button>');
+    dataWindow.document.close();
+
+    // Export functionality
+    dataWindow.document.getElementById('exportData').onclick = function() {
+        const blob = new Blob([dataString], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = dataWindow.document.createElement('a');
+        a.href = url;
+        a.download = 'exported_data.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    // Import functionality
+    const importInput = dataWindow.document.getElementById('importData');
+    dataWindow.document.getElementById('importButton').onclick = function() {
+        importInput.click();
+    };
+
+    importInput.onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    localStorage.setItem(LOCALSTORAGE, JSON.stringify(importedData));
+                    alert('Data imported successfully.');
+                    // Refresh data view
+                    dataWindow.location.reload();
+                } catch (error) {
+                    alert('Error parsing the imported file. Please ensure it is a valid JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+}
+
+// Add a button in the floating widget for managing data
+const manageDataButton = document.createElement('button');
+manageDataButton.textContent = 'Manage Data';
+manageDataButton.addEventListener('click', openDataWindow);
+widget.querySelector('.content-opened').appendChild(manageDataButton);
+
+
+
     // Check for URL changes
     setInterval(() => {
         const currentUrl = location.href;
