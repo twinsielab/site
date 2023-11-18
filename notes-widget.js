@@ -199,12 +199,12 @@
     styleSheet2.innerHTML = `
         .custom-note-ui {
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 4px;
+            left: 4px;
             display: flex;
             align-items: center;
-            background: #fff17680;
-            padding: 2px 5px;
+            background: #fff59bb8;
+            padding: 0px 6px;
             border-radius: 2px;
         }
         .custom-note-ui .note-icon {
