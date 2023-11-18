@@ -323,6 +323,13 @@
                 th {
                     background-color: #2c2c2c; /* Even darker header cells */
                 }
+                td:nth-child(1) {
+                    text-align: center;
+                }
+                td:nth-child(3) {
+                    text-wrap: no-wrap;
+                }
+                
                 td textarea {
                     min-height: 5em;
                     resize: vertical;
