@@ -119,6 +119,24 @@ body.dark  [style*="border-bottom: 2px solid"] {
 }
 
 
+/* hide automation button */
+.notion-collection-automation-edit-view{
+  display: none !important;
+}
+
+/* hide show more props */
+div[aria-label="Page properties"] + div{
+ display: none !important;
+}
+
+
+
+
+/* Tags */
+
+
+
+
 /* Bold Light Gray */
 [style*="color: rgb(50, 48, 44); background: rgba(227, 226, 224, 0.5);"] {
     color: hsl(0, 0%, 30%) !important;
@@ -281,16 +299,3 @@ body.dark  [style*="border-bottom: 2px solid"] {
     border: 1px solid hsl(0, 80%, 43%) !important;
     border-radius: 1px !important;
 }
-
-
-
-/* hide automation button */
-.notion-collection-automation-edit-view{
-  display:none;
-}
-
-/* hide show more props */
-div[aria-label="Page properties"] + div{
- display: none;
-}
-
