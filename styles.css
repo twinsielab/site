@@ -1,3 +1,31 @@
+body #notion-app header {
+    background: hsl(282.07deg 42.03% 40.59%) !important
+}
+body #notion-app header div {
+    color: white !important;
+}
+body #notion-app header .notion-record-icon.notranslate img {
+    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
+}
+body .notion-record-icon.notranslate img {
+    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5));
+}
+
+
+body.dark #notion-app header {
+    background: hsl(283.24deg 40.48% 32.94%) !important;
+}
+body.dark #notion-app header div {
+    color: white !important;
+}
+body.dark #notion-app header .notion-record-icon.notranslate img {
+    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
+}
+body.dark .notion-record-icon.notranslate img {
+    filter: drop-shadow(1px 1px 5px rgba(255,255,255, 0.5));
+}
+
+
 
 .notion-collection-item a {
     border-radius: 1px !important;
