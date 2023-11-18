@@ -79,7 +79,7 @@
     // CSS styles for the widget
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
-    styleSheet.innerText = `
+    styleSheet.innerHTML = `
         #itemTrackerWidget {
             position: fixed;
             bottom: 20px;
@@ -196,7 +196,7 @@
     // Enhance item cards with UI elements
     const styleSheet2 = document.createElement("style");
     styleSheet2.type = "text/css";
-    styleSheet2.innerText = `
+    styleSheet2.innerHTML = `
         .custom-note-ui {
             position: absolute;
             top: 5px;
