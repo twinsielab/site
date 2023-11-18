@@ -80,16 +80,16 @@ body.dark .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
 }
 /* tab button icon */
 .notion-collection-view-tab-button svg {
-  display: none;
+  display: none !important;
 }
 /* active tab button */
 [style*="border-bottom: 2px solid"] {
-  margin-top: 1px;
-  height: 40px;
-  border-bottom: 0px solid;
-  background: #fff;
-  border: 1px solid #9d9d95;
-  border-bottom: 0px;
+  margin-top: 1px !important;
+  height: 40px !important;
+  border-bottom: 0px solid !important;
+  background: #fff !important;
+  border: 1px solid #9d9d95 !important;
+  border-bottom: 0px !important;
 }
 
 
@@ -110,12 +110,12 @@ body.dark .notion-collection-view-tab-button {
 }
 /* active tab button */
 body.dark  [style*="border-bottom: 2px solid"] {
-  margin-top: 1px;
-  height: 40px;
-  border-bottom: 0px solid;
-  background: #191919;
-  border: 1px solid white;
-  border-bottom: 0px;
+  margin-top: 1px !important;
+  height: 40px !important;
+  border-bottom: 0px solid !important;
+  background: #191919 !important;
+  border: 1px solid white !important;
+  border-bottom: 0px !important;
 }
 
 
