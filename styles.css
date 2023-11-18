@@ -40,6 +40,11 @@ body.dark .notion-record-icon.notranslate img {
     display: none !important;
 }
 
+/* hide automation button */
+.notion-collection-automation-edit-view{
+  display: none !important;
+}
+
 /* modal */
 .notion-peek-renderer > div:nth-child(2) {
     border-radius: 1px !important;
@@ -62,6 +67,18 @@ body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) svg {
 body.dark .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
     background: hsl(283.24deg 40.48% 32.94%) !important;
 }
+
+/* hide page prop icons */
+[aria-label="Page properties"] [role="row"] > div:first-child svg {
+  display: none !important;
+}
+
+/* hide show more props */
+div[aria-label="Page properties"] + div{
+ display: none !important;
+}
+
+
 
 
 /* tab bar */
@@ -116,17 +133,6 @@ body.dark  [style*="border-bottom: 2px solid"] {
   background: #191919 !important;
   border: 1px solid white !important;
   border-bottom: 0px !important;
-}
-
-
-/* hide automation button */
-.notion-collection-automation-edit-view{
-  display: none !important;
-}
-
-/* hide show more props */
-div[aria-label="Page properties"] + div{
- display: none !important;
 }
 
 
