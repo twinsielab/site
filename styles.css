@@ -1,1 +1,57 @@
 
+
+.notion-collection-item a {
+    border-radius: 1px !important;
+    background: rgba(127,127,127,0.1) !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(127,127,127,0.25);
+}
+
+.notion-collection-item a .notion-record-icon.notranslate {
+    display: none !important;
+}
+
+
+div[style*="background: rgb(40, 69, 108)"] {
+    background: rgb(13 116 255) !important;
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(206, 205, 202, 0.5) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: lightgray !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(155, 154, 151, 0.4) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: gray !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(140, 46, 0, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: brown !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(245, 93, 0, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px;"] {
+    background: orange !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(233, 168, 0, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px;"] {
+    background: yellow !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(0, 135, 107, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: green !important;
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(0, 120, 223, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: blue !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(103, 36, 222, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: purple !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(221, 0, 129, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: pink !important
+}
+
+div [style*="display: flex; align-items: center; flex-shrink: 0; min-width: 0px; height: 18px; border-radius: 3px; padding-left: 6px; padding-right: 6px; font-size: 14px; line-height: 120%; color: rgb(55, 53, 47); background: rgba(255, 0, 26, 0.2) none repeat scroll 0% 0%; margin: 0px 6px 6px 0px"] {
+    background: red !important
+}
