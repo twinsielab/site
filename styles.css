@@ -26,7 +26,7 @@ body.dark .notion-record-icon.notranslate img {
 }
 
 
-
+/* db items */
 .notion-collection-item a {
     border-radius: 1px !important;
     background: rgba(127,127,127,0.1) !important;
@@ -37,6 +37,33 @@ body.dark .notion-record-icon.notranslate img {
 .notion-collection-item a .notion-record-icon.notranslate {
     display: none !important;
 }
+
+/* modal */
+.notion-peek-renderer > div:nth-child(2) {
+    border-radius: 1px !important;
+}
+body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
+    background: hsl(282.07deg 42.03% 40.59%) !important;
+    border-radius: 0px;
+    color:white !important;
+    fill: white !important;
+}
+body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) div {
+    color:white !important;
+    fill: white !important;
+}
+body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) svg {
+    color:white !important;
+    fill: white !important;
+}
+
+body.dark .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
+    background: hsl(283.24deg 40.48% 32.94%) !important;
+}
+
+
+
+
 
 /* Bold Light Gray */
 [style*="color: rgb(50, 48, 44); background: rgba(227, 226, 224, 0.5);"] {
