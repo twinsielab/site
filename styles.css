@@ -1,51 +1,72 @@
 body #notion-app header,
 body #notion-app header .notion-topbar-mobile {
-    background: hsl(282.07deg 42.03% 40.59%) !important
+  background: hsl(282.07deg 42.03% 40.59%) !important
 }
+
 body #notion-app header div {
-    color: white !important;
+  color: white !important;
 }
+
 body #notion-app header .notion-record-icon.notranslate img {
-    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.5)) brightness(1.5);
 }
+
 body #notion-app header .notion-record-icon.notranslate img {
-    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5));
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.5));
 }
 
 
 body.dark #notion-app header,
 body.dark #notion-app header .notion-topbar-mobile {
-    background: hsl(283.24deg 40.48% 32.94%) !important;
+  background: hsl(283.24deg 40.48% 32.94%) !important;
 }
+
 body.dark #notion-app header div {
-    color: white !important;
+  color: white !important;
 }
+
 body.dark #notion-app header .notion-record-icon.notranslate img {
-    filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.5)) brightness(1.5);
 }
+
 body.dark #notion-app header .notion-record-icon.notranslate img {
-    filter: drop-shadow(1px 1px 5px rgba(255,255,255, 0.5));
+  filter: drop-shadow(1px 1px 5px rgba(255, 255, 255, 0.5));
+}
+
+#notion-app>div>div:nth-child(1)>div>div:nth-child(1)>main>div>div.whenContentEditable>div>div.layout-full img {
+  /* -webkit-mask-image: -webkit-gradient(linear, left 50%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.5))); */
+}
+
+#notion-app>div>div:nth-child(1)>div>div:nth-child(1)>main>div>div.whenContentEditable>div>div.layout-full {
+  box-shadow: 0px 2px 100px rgba(0, 0, 0, .75);
+  margin-top: -1px;
+}
+
+body.dark #notion-app>div>div:nth-child(1)>div>div:nth-child(1)>main>div>div.whenContentEditable>div>div.layout-full {
+  box-shadow: 0px 2px 100px rgba(255, 255, 255, 0.2);
 }
 
 
 
 /* page icon emoji */
 .notion-record-icon [aria-label*="Page icon"] [role="img"] {
-    filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+  filter: drop-shadow(1px 5px 5px rgba(128, 128, 128, 1));
 }
+
 /* page icon img */
-.notion-record-icon img[alt="Page icon"]{
-  filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+.notion-record-icon img[alt="Page icon"] {
+  filter: drop-shadow(1px 5px 5px rgba(128, 128, 128, 1));
 }
 
 
 /* page link with emoji */
 a .notion-record-icon.notranslate span[role="img"] {
-    filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+  filter: drop-shadow(0px 1px 5px rgba(128, 128, 128, 1));
 }
+
 /* page link with image */
-main a .notion-record-icon.notranslate img{
-  filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+main a .notion-record-icon.notranslate img {
+  filter: drop-shadow(0px 1px 5px rgba(128, 128, 128, 1));
 }
 
 
@@ -53,100 +74,110 @@ main a .notion-record-icon.notranslate img{
 /* db items */
 
 /* Hide description button on top of database pages */
-#notion-app > div > div:nth-child(1) > div > div:nth-child(1) > main > div > div:nth-child(2) > div:nth-child(2) > div.notion-page-controls div{
+#notion-app>div>div:nth-child(1)>div>div:nth-child(1)>main>div>div:nth-child(2)>div:nth-child(2)>div.notion-page-controls div {
   display: none;
 }
 
 .notion-collection-item a {
-    border-radius: 1px !important;
-    background: rgba(127,127,127,0.1) !important;
-    box-shadow: none !important;
-    border: 1px solid rgba(127,127,127,0.25);
+  border-radius: 1px !important;
+  background: rgba(127, 127, 127, 0.1) !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(127, 127, 127, 0.25);
 }
 
 .notion-collection-item a .notion-record-icon.notranslate {
-    display: none !important;
+  display: none !important;
 }
 
 /* hide automation button */
-.notion-collection-automation-edit-view{
+.notion-collection-automation-edit-view {
   display: none !important;
 }
 
 /* modal */
-.notion-peek-renderer > div:nth-child(2) {
-    border-radius: 1px !important;
-}
-body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
-    background: hsl(282.07deg 42.03% 40.59%) !important;
-    border-radius: 0px !important;
-    color:white !important;
-    fill: white !important;
-}
-body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) div {
-    color:white !important;
-    fill: white !important;
-}
-body .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) svg {
-    color:white !important;
-    fill: white !important;
+.notion-peek-renderer>div:nth-child(2) {
+  border-radius: 1px !important;
 }
 
-body.dark .notion-peek-renderer > div:nth-child(2) > div:nth-child(1) {
-    background: hsl(283.24deg 40.48% 32.94%) !important;
+body .notion-peek-renderer>div:nth-child(2)>div:nth-child(1) {
+  background: hsl(282.07deg 42.03% 40.59%) !important;
+  border-radius: 0px !important;
+  color: white !important;
+  fill: white !important;
+}
+
+body .notion-peek-renderer>div:nth-child(2)>div:nth-child(1) div {
+  color: white !important;
+  fill: white !important;
+}
+
+body .notion-peek-renderer>div:nth-child(2)>div:nth-child(1) svg {
+  color: white !important;
+  fill: white !important;
+}
+
+body.dark .notion-peek-renderer>div:nth-child(2)>div:nth-child(1) {
+  background: hsl(283.24deg 40.48% 32.94%) !important;
 }
 
 /* hide page prop icons */
-[aria-label="Page properties"] [role="row"] > div:first-child svg {
+[aria-label="Page properties"] [role="row"]>div:first-child svg {
   display: none !important;
 }
 
 /* hide show more props */
-div[aria-label="Page properties"] + div{
- display: none !important;
+div[aria-label="Page properties"]+div {
+  display: none !important;
 }
 
 
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4),
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5){
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(4),
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(5) {
   width: 40px;
 }
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) svg {
+
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(2) svg {
   display: none;
 }
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) svg,
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) svg {
+
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(4) svg,
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(5) svg {
   display: none;
 }
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4):before {
- content: "⬅️";
- font-size: 24px;
+
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(4):before {
+  content: "⬅️";
+  font-size: 24px;
 }
-#notion-app > div > div.notion-overlay-container.notion-default-overlay-container > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5):before {
- content: "➡️";
- font-size: 24px;
+
+#notion-app>div>div.notion-overlay-container.notion-default-overlay-container>div:nth-child(2)>div>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div:nth-child(5):before {
+  content: "➡️";
+  font-size: 24px;
 }
 
 
 
 /* tab bar */
-.notion-collection_view_page-block > [style*="box-shadow"] {
+.notion-collection_view_page-block>[style*="box-shadow"] {
   box-shadow: none;
   background-color: #fff;
   border-bottom: 1px solid #9d9d95;
 }
+
 /* tab button */
 .notion-collection-view-tab-button {
   border-radius: 5px 5px 0 0px;
-  background: rgba(128,128,128,0.1);
+  background: rgba(128, 128, 128, 0.1);
   margin-right: 2px;
   margin-top: 4px;
   height: 36px;
 }
+
 /* tab button icon */
 .notion-collection-view-tab-button svg {
   display: none !important;
 }
+
 /* active tab button */
 [style*="border-bottom: 2px solid"] {
   margin-top: 1px !important;
@@ -160,21 +191,23 @@ div[aria-label="Page properties"] + div{
 
 
 /* tab bar */
-body.dark .notion-collection_view_page-block > [style*="box-shadow"] {
+body.dark .notion-collection_view_page-block>[style*="box-shadow"] {
   box-shadow: none;
   background-color: #191919;
   border-bottom: 1px solid white;
 }
+
 /* tab button */
 body.dark .notion-collection-view-tab-button {
   border-radius: 5px 5px 0 0px;
-  background: rgba(128,128,128,0.1);
+  background: rgba(128, 128, 128, 0.1);
   margin-right: 2px;
   margin-top: 4px;
   height: 36px;
 }
+
 /* active tab button */
-body.dark  [style*="border-bottom: 2px solid"] {
+body.dark [style*="border-bottom: 2px solid"] {
   margin-top: 1px !important;
   height: 40px !important;
   border-bottom: 0px solid !important;
@@ -187,12 +220,12 @@ body.dark  [style*="border-bottom: 2px solid"] {
 
 
 /* picture comments button */
-#notion-app .notion-image-block > div > div > div > div:nth-child(2) > div:nth-child(1) {
+#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(1) {
   display: none;
 }
 
 /* picture (...) button */
-#notion-app .notion-image-block > div > div > div > div:nth-child(2) > div:nth-child(3) {
+#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(3) {
   display: none;
 }
 
@@ -202,82 +235,82 @@ body.dark  [style*="border-bottom: 2px solid"] {
 
 /* Bold Light Gray */
 [style*="color: rgb(50, 48, 44); background: rgba(227, 226, 224, 0.5);"] {
-    color: hsl(0, 0%, 30%) !important;
-    background: hsl(0, 0%, 95%) !important;
-    border: 1px solid hsl(0, 0%, 60%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 0%, 30%) !important;
+  background: hsl(0, 0%, 95%) !important;
+  border: 1px solid hsl(0, 0%, 60%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Gray */
 [style*="color: rgb(50, 48, 44); background: rgb(227, 226, 224);"] {
-    color: hsl(0, 0%, 30%) !important;
-    background: hsl(0, 0%, 95%) !important;
-    border: 1px solid hsl(0, 0%, 30%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 0%, 30%) !important;
+  background: hsl(0, 0%, 95%) !important;
+  border: 1px solid hsl(0, 0%, 30%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Brown */
 [style*="color: rgb(68, 42, 30); background: rgb(238, 224, 218);"] {
-    color: hsl(30, 44%, 30%) !important;
-    background: hsl(30, 44%, 95%) !important;
-    border: 1px solid hsl(30, 44%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(30, 44%, 30%) !important;
+  background: hsl(30, 44%, 95%) !important;
+  border: 1px solid hsl(30, 44%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Orange */
 [style*="color: rgb(73, 41, 14); background: rgb(250, 222, 201);"] {
-    color: hsl(26, 100%, 30%) !important;
-    background: hsl(26, 100%, 95%) !important;
-    border: 1px solid hsl(26, 100%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(26, 100%, 30%) !important;
+  background: hsl(26, 100%, 95%) !important;
+  border: 1px solid hsl(26, 100%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Yellow */
 [style*="color: rgb(64, 44, 27); background: rgb(253, 236, 200);"] {
-    color: hsl(60, 100%, 25%) !important;
-    background: hsl(60, 100%, 95%) !important;
-    border: 1px solid hsl(60, 100%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(60, 100%, 25%) !important;
+  background: hsl(60, 100%, 95%) !important;
+  border: 1px solid hsl(60, 100%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Green */
 [style*="color: rgb(28, 56, 41); background: rgb(219, 237, 219);"] {
-    color: hsl(120, 60%, 30%) !important;
-    background: hsl(120, 60%, 95%) !important;
-    border: 1px solid hsl(120, 60%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(120, 60%, 30%) !important;
+  background: hsl(120, 60%, 95%) !important;
+  border: 1px solid hsl(120, 60%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Blue */
 [style*="color: rgb(24, 51, 71); background: rgb(211, 229, 239);"] {
-    color: hsl(210, 100%, 30%) !important;
-    background: hsl(210, 100%, 95%) !important;
-    border: 1px solid hsl(210, 100%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(210, 100%, 30%) !important;
+  background: hsl(210, 100%, 95%) !important;
+  border: 1px solid hsl(210, 100%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Purple */
 [style*="color: rgb(65, 36, 84); background: rgb(232, 222, 238);"] {
-    color: hsl(280, 60%, 30%) !important;
-    background: hsl(280, 60%, 95%) !important;
-    border: 1px solid hsl(280, 60%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(280, 60%, 30%) !important;
+  background: hsl(280, 60%, 95%) !important;
+  border: 1px solid hsl(280, 60%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Pink */
 [style*="color: rgb(76, 35, 55); background: rgb(245, 224, 233);"] {
-    color: hsl(340, 80%, 30%) !important;
-    background: hsl(340, 80%, 95%) !important;
-    border: 1px solid hsl(340, 80%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(340, 80%, 30%) !important;
+  background: hsl(340, 80%, 95%) !important;
+  border: 1px solid hsl(340, 80%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 /* Bold Red */
 [style*="color: rgb(93, 23, 21); background: rgb(255, 226, 221);"] {
-    color: hsl(0, 80%, 30%) !important;
-    background: hsl(0, 80%, 95%) !important;
-    border: 1px solid hsl(0, 80%, 50%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 80%, 30%) !important;
+  background: hsl(0, 80%, 95%) !important;
+  border: 1px solid hsl(0, 80%, 50%) !important;
+  border-radius: 1px !important;
 }
 
 
@@ -285,80 +318,80 @@ body.dark  [style*="border-bottom: 2px solid"] {
 
 /* DarkTheme: Light Gray */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(55, 55, 55);"] {
-    color: hsl(0, 0%, 90%) !important;
-    background: hsl(0, 0%, 10%) !important;
-    border: 1px solid hsl(0, 0%, 22%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 0%, 90%) !important;
+  background: hsl(0, 0%, 10%) !important;
+  border: 1px solid hsl(0, 0%, 22%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Gray */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(90, 90, 90);"] {
-    color: hsl(0, 0%, 90%) !important;
-    background: hsl(0, 0%, 10%) !important;
-    border: 1px solid hsl(0, 0%, 65%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 0%, 90%) !important;
+  background: hsl(0, 0%, 10%) !important;
+  border: 1px solid hsl(0, 0%, 65%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Brown */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(96, 59, 44);"] {
-    color: hsl(30, 44%, 90%) !important;
-    background: hsl(30, 44%, 10%) !important;
-    border: 1px solid hsl(30, 44%, 37%) !important;
-    border-radius: 1px !important;
+  color: hsl(30, 44%, 90%) !important;
+  background: hsl(30, 44%, 10%) !important;
+  border: 1px solid hsl(30, 44%, 37%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Orange */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(133, 76, 29);"] {
-    color: hsl(26, 100%, 90%) !important;
-    background: hsl(26, 100%, 10%) !important;
-    border: 1px solid hsl(26, 100%, 52%) !important;
-    border-radius: 1px !important;
+  color: hsl(26, 100%, 90%) !important;
+  background: hsl(26, 100%, 10%) !important;
+  border: 1px solid hsl(26, 100%, 52%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Yellow */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(137, 99, 42);"] {
-    color: hsl(60, 100%, 90%) !important;
-    background: hsl(60, 100%, 10%) !important;
-    border: 1px solid hsl(60, 100%, 34%) !important;
-    border-radius: 1px !important;
+  color: hsl(60, 100%, 90%) !important;
+  background: hsl(60, 100%, 10%) !important;
+  border: 1px solid hsl(60, 100%, 34%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Green */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(43, 89, 63);"] {
-    color: hsl(120, 60%, 90%) !important;
-    background: hsl(120, 60%, 10%) !important;
-    border: 1px solid hsl(120, 60%, 35%) !important;
-    border-radius: 1px !important;
+  color: hsl(120, 60%, 90%) !important;
+  background: hsl(120, 60%, 10%) !important;
+  border: 1px solid hsl(120, 60%, 35%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Blue */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(40, 69, 108);"] {
-    color: hsl(210, 100%, 90%) !important;
-    background: hsl(210, 100%, 10%) !important;
-    border: 1px solid hsl(210, 100%, 42%) !important;
-    border-radius: 1px !important;
+  color: hsl(210, 100%, 90%) !important;
+  background: hsl(210, 100%, 10%) !important;
+  border: 1px solid hsl(210, 100%, 42%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Purple */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(73, 47, 100);"] {
-    color: hsl(280, 60%, 90%) !important;
-    background: hsl(280, 60%, 10%) !important;
-    border: 1px solid hsl(280, 60%, 49%) !important;
-    border-radius: 1px !important;
+  color: hsl(280, 60%, 90%) !important;
+  background: hsl(280, 60%, 10%) !important;
+  border: 1px solid hsl(280, 60%, 49%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Pink */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(105, 49, 76);"] {
-    color: hsl(340, 80%, 90%) !important;
-    background: hsl(340, 80%, 10%) !important;
-    border: 1px solid hsl(340, 80%, 41%) !important;
-    border-radius: 1px !important;
+  color: hsl(340, 80%, 90%) !important;
+  background: hsl(340, 80%, 10%) !important;
+  border: 1px solid hsl(340, 80%, 41%) !important;
+  border-radius: 1px !important;
 }
 
 /* DarkTheme: Red */
 [style*="color: rgba(255, 255, 255, 0.804); background: rgb(110, 54, 48);"] {
-    color: hsl(0, 80%, 90%) !important;
-    background: hsl(0, 80%, 10%) !important;
-    border: 1px solid hsl(0, 80%, 43%) !important;
-    border-radius: 1px !important;
+  color: hsl(0, 80%, 90%) !important;
+  background: hsl(0, 80%, 10%) !important;
+  border: 1px solid hsl(0, 80%, 43%) !important;
+  border-radius: 1px !important;
 }
