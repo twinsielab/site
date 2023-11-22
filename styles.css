@@ -8,7 +8,7 @@ body #notion-app header div {
 body #notion-app header .notion-record-icon.notranslate img {
     filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
 }
-body .notion-record-icon.notranslate img {
+body #notion-app header .notion-record-icon.notranslate img {
     filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5));
 }
 
@@ -23,12 +23,40 @@ body.dark #notion-app header div {
 body.dark #notion-app header .notion-record-icon.notranslate img {
     filter: drop-shadow(1px 1px 5px rgba(0,0,0, 0.5)) brightness(1.5);
 }
-body.dark .notion-record-icon.notranslate img {
+body.dark #notion-app header .notion-record-icon.notranslate img {
     filter: drop-shadow(1px 1px 5px rgba(255,255,255, 0.5));
 }
 
 
+
+/* page icon emoji */
+.notion-record-icon [aria-label*="Page icon"] [role="img"] {
+    filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+}
+/* page icon img */
+.notion-record-icon img[alt="Page icon"]{
+  filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+}
+
+
+/* page link with emoji */
+a .notion-record-icon.notranslate span[role="img"] {
+    filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+}
+/* page link with image */
+main a .notion-record-icon.notranslate img{
+  filter: drop-shadow(1px 1px 5px rgba(128,128,128, 1));
+}
+
+
+
 /* db items */
+
+/* Hide description button on top of database pages */
+#notion-app > div > div:nth-child(1) > div > div:nth-child(1) > main > div > div:nth-child(2) > div:nth-child(2) > div.notion-page-controls div{
+  display: none;
+}
+
 .notion-collection-item a {
     border-radius: 1px !important;
     background: rgba(127,127,127,0.1) !important;
@@ -158,10 +186,19 @@ body.dark  [style*="border-bottom: 2px solid"] {
 
 
 
-/* Tags */
+/* picture comments button */
+#notion-app .notion-image-block > div > div > div > div:nth-child(2) > div:nth-child(1) {
+  display: none;
+}
+
+/* picture (...) button */
+#notion-app .notion-image-block > div > div > div > div:nth-child(2) > div:nth-child(3) {
+  display: none;
+}
 
 
 
+/***** Tags ******/
 
 /* Bold Light Gray */
 [style*="color: rgb(50, 48, 44); background: rgba(227, 226, 224, 0.5);"] {
