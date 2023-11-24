@@ -75,10 +75,10 @@ main a .notion-record-icon.notranslate img {
 
 /* Hide description button on top of database pages */
 #notion-app>div>div:nth-child(1)>div>div:nth-child(1)>main>div>div:nth-child(2)>div:nth-child(2)>div.notion-page-controls div {
-  display: none;
+  display: none !important;
 }
 #notion-app > div > div:nth-child(1) > div > div:nth-child(1) > main > div > div:nth-child(2) > div:nth-child(2) > div.notion-page-controls > div[role="button"] {
-  display: none;
+  display: none !important;
 }
 
 .notion-collection-item a {
