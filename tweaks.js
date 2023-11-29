@@ -12,6 +12,7 @@ document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowLeft') {
             // If the prevButton exists, simulate a click
             if (prevButton) {
+                console.log('Arrow Left, click Previous button');
                 prevButton.click();
             }
         }
@@ -20,6 +21,7 @@ document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowRight') {
             // If the nextButton exists, simulate a click
             if (nextButton) {
+                console.log('Arrow Right, click Next button');
                 nextButton.click();
             }
         }
