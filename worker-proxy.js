@@ -14,7 +14,22 @@ const CUSTOM_HEAD = `
   `;
 
 const CUSTOM_HTML = `
+    <script src="https://twinsielab.github.io/site/tweaks.js"></script>
     <script src="https://twinsielab.github.io/site/notes-widget.js"></script>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPF4769LHF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RPF4769LHF');
+    </script>
+
+    <script>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+      posthog.init('phc_sm5VYo4NsmzIHsLq3ESA67DWhxXCT97hnobz2d0I95T',{api_host:'https://app.posthog.com'})
+    </script>
   `;
 
 /*
@@ -27,6 +42,8 @@ const ALIAS_TO_ID = {
   'support': 'e130064ba2de467e8fbb154dd2778143',
   'gallery': 'd0d1308e17624f5f979e4dfd29b0672a',
   'about-us': '2a671df9bada4a1ca037a4f6aa7fb290',
+
+  'tms': 'e030b06d532c4460a935a7d06911ad74',
 
   'printers': '13fca183ef4a40bf9588be8d2aa92232',
   'flow-ratio': '7dd0c36944244133ae463cd6439a793d',
@@ -43,6 +60,8 @@ const SITEMAP = [
   'Quick-Tolerance-test-e5c59bb35bb74bc395dc036e3221f302',
   'Configure-and-install-Octoprint-on-OrangePi-c2df3f6004dc407cb8a15926f590f645',
   'Orca-Slicer-c45ba04fa0494a37ad8937a16e7f6d38',
+  'tms',
+  
   'support',
   //'gallery',
   'about-us',
@@ -157,8 +176,7 @@ async function fetchAndApply(request) {
 class MetaRewriter {
   element(element) {
     if (PAGE_TITLE !== '') {
-      if (element.getAttribute('property') === 'og:title'
-        || element.getAttribute('name') === 'twitter:title') {
+      if (element.getAttribute('property') === 'og:title' || element.getAttribute('name') === 'twitter:title') {
         element.setAttribute('content', PAGE_TITLE);
       }
       if (element.tagName === 'title') {
@@ -166,14 +184,11 @@ class MetaRewriter {
       }
     }
     if (PAGE_DESCRIPTION !== '') {
-      if (element.getAttribute('name') === 'description'
-        || element.getAttribute('property') === 'og:description'
-        || element.getAttribute('name') === 'twitter:description') {
+      if (element.getAttribute('name') === 'description' || element.getAttribute('property') === 'og:description' || element.getAttribute('name') === 'twitter:description') {
         element.setAttribute('content', PAGE_DESCRIPTION);
       }
     }
-    if (element.getAttribute('property') === 'og:url'
-      || element.getAttribute('name') === 'twitter:url') {
+    if (element.getAttribute('property') === 'og:url' || element.getAttribute('name') === 'twitter:url') {
       element.setAttribute('content', MY_DOMAIN);
     }
     if (element.getAttribute('name') === 'apple-itunes-app') {
