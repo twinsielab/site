@@ -39,10 +39,13 @@ const CUSTOM_HTML = `
  */
 const ALIAS_TO_ID = {
   '': '96c2251f9d7449e288f17434e6afbacb',
+
+  'sn': 'd0d1308e17624f5f979e4dfd29b0672a',
   'support': 'e130064ba2de467e8fbb154dd2778143',
-  'gallery': 'd0d1308e17624f5f979e4dfd29b0672a',
   'about-us': '2a671df9bada4a1ca037a4f6aa7fb290',
 
+  'alpha': '7f0e682bede64903bbeef3b328e350a6',
+  'pro': '707be1b81ad14eb5a144916e7aeeaa68',
   'tms': 'e030b06d532c4460a935a7d06911ad74',
 
   'printers': '13fca183ef4a40bf9588be8d2aa92232',
