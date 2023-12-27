@@ -1,5 +1,4 @@
 /* CONFIGURATION STARTS HERE */
-
 const MY_DOMAIN = 'www.tinymod.xyz';
 
 // SEO
@@ -11,7 +10,7 @@ const GOOGLE_FONT = 'Play';
 
 const CUSTOM_HEAD = `
     <link rel="stylesheet" href="https://twinsielab.github.io/site/styles.css">
-  `;
+`;
 
 const CUSTOM_HTML = `
     <script src="https://twinsielab.github.io/site/tweaks.js"></script>
@@ -26,6 +25,7 @@ const CUSTOM_HTML = `
       gtag('config', 'G-RPF4769LHF');
     </script>
 
+    <!-- Posthog -->
     <script>
       !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
       posthog.init('phc_sm5VYo4NsmzIHsLq3ESA67DWhxXCT97hnobz2d0I95T',{api_host:'https://app.posthog.com'})
@@ -56,6 +56,15 @@ const ALIAS_TO_ID = {
 // sitemap pages
 const SITEMAP = [
   '',
+  'alpha',
+  'pro',
+  'tms',
+  
+  'sn',
+  'support',
+  'about-us',
+  'flow-ratio',
+
   'Building-a-TinyMod-7f0e682bede64903bbeef3b328e350a6',
   'be054ee8a1174af983ac98282af8bd3e?v=9e361da957c2447f98f77abe8597c344', // printed parts
   '3f4a4eb04c95442ba7494b8616690b79?v=d47a4f2d1b3846d6a679e48a8fceb228', // non printed parts
@@ -63,12 +72,6 @@ const SITEMAP = [
   'Quick-Tolerance-test-e5c59bb35bb74bc395dc036e3221f302',
   'Configure-and-install-Octoprint-on-OrangePi-c2df3f6004dc407cb8a15926f590f645',
   'Orca-Slicer-c45ba04fa0494a37ad8937a16e7f6d38',
-  'tms',
-  
-  'support',
-  //'gallery',
-  'about-us',
-  'flow-ratio',
 ];
 
 
@@ -80,7 +83,6 @@ const ID_TO_ALIAS = Object.fromEntries(Object.entries(ALIAS_TO_ID).map(([key, va
 addEventListener('fetch', event => {
   event.respondWith(fetchAndApply(event.request));
 });
-
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
