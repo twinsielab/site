@@ -220,6 +220,16 @@ body.dark [style*="border-bottom: 2px solid"] {
 }
 
 
+/* picture comments button */
+#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(1) {
+  display: none !important;
+}
+
+/* picture (...) button */
+#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(3) {
+  display: none !important;
+}
+
 
 /* make links in properties look like buttons */
 #notion-app div[aria-label="Page properties"] a {
@@ -246,15 +256,28 @@ body.dark [style*="border-bottom: 2px solid"] {
 }
 
 
-
-/* picture comments button */
-#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(1) {
-  display: none !important;
+/* make attachment files look like buttons */
+#notion-app .notion-file-block div[role="button"] {
+  display: inline-block !important;
+  padding: 1px 10px;
+  font-size: 1.25em;
+  background-color: hsl(283.24deg 40.48% 72.94%);
+  color:  hsl(283.24deg 40.48% 22.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 72.94%);
+  box-shadow: 0px 1px 4px rgba(127,127,127,0.9);
+  border-radius: 2px;
+  transition: all 0.15s ease !important;
 }
-
-/* picture (...) button */
-#notion-app .notion-image-block>div>div>div>div:nth-child(2)>div:nth-child(3) {
-  display: none !important;
+#notion-app .notion-file-block div[role="button"]:hover {
+  background-color: hsl(283.24deg 40.48% 82.94%);
+  color:  hsl(283.24deg 40.48% 22.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 72.94%);
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+}
+#notion-app .notion-file-block div[role="button"]:active {
+  background-color: hsl(283.24deg 40.48% 22.94%) ;
+  color:  hsl(283.24deg 40.48% 72.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 72.94%);
 }
 
 
