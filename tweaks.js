@@ -39,8 +39,10 @@ function onClickPictureWithLink(event) {
         console.log('Clicking picture with link', firstLink);
         if (firstLink) {
             event.preventDefault();
+            event.stopPropagation();
             firstLink.click();
             // location.href = firstLink.href;
+            return false;
 
         }
     }
