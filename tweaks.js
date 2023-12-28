@@ -27,3 +27,21 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+
+document.addEventListener('mousedown', onClickPictureWithLink);
+
+function onClickPictureWithLink(event) {
+    let targetElement = event.target.closest('div[role="figure"]');
+
+    if (targetElement) {
+        let firstLink = targetElement.querySelector('div:nth-child(2) a:first-child');
+        console.log('Clicking picture with link', firstLink);
+        if (firstLink) {
+            event.preventDefault();
+            firstLink.click();
+            // location.href = firstLink.href;
+
+        }
+    }
+}
