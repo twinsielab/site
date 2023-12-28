@@ -41,7 +41,9 @@ const ALIAS_TO_ID = {
   '': '96c2251f9d7449e288f17434e6afbacb',
 
   'sn': 'd0d1308e17624f5f979e4dfd29b0672a',
+  'request-sn': '37153907e8b34bf0b8cf84abab6ca5f1',
   'support': 'e130064ba2de467e8fbb154dd2778143',
+  'discord': '53c2dab01d17421593aaad68c01afa0b',
   'about-us': '2a671df9bada4a1ca037a4f6aa7fb290',
 
   'alpha': '7f0e682bede64903bbeef3b328e350a6',
@@ -50,6 +52,8 @@ const ALIAS_TO_ID = {
 
   'printers': '13fca183ef4a40bf9588be8d2aa92232',
   'flow-ratio': '7dd0c36944244133ae463cd6439a793d',
+
+  'heatbed-mk1': '3252bf9d20d74f399930506c4933bb7a',
 };
 
 
