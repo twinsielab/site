@@ -306,10 +306,30 @@ body.dark [style*="border-bottom: 2px solid"] {
 }
 
 
-/* Hide Figure Captions that the first thing on the caption is a <a> link */
+/* hide figure caption link */
 div[role="figure"] > div:nth-child(2) a:first-child {
-  display: none;
+  display: none !important;
 }
+
+/* figure with caption link */
+div[role="figure"]:has(div:nth-child(2) a:first-child) {
+  cursor: pointer !important;
+  border-radius: 4px ;
+}
+/* figure with caption link :hover */
+div[role="figure"]:has(div:nth-child(2) a:first-child):hover {
+  cursor: pointer !important;
+  background: rgba(127,127,127,0.1);
+}
+/* figure with caption link */
+div[role="figure"]:has(div:nth-child(2) a:first-child) img {
+  cursor: pointer !important;
+}
+/* figure with caption link (hide download buttons) */
+div[role="figure"]:has(div:nth-child(2) a:first-child) [role="button"] {
+  display: none !important;
+}
+
 
 
 /***** Tags ******/
