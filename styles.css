@@ -306,6 +306,11 @@ body.dark [style*="border-bottom: 2px solid"] {
 }
 
 
+/* Hide Figure Captions that the first thing on the caption is a <a> link */
+div[role="figure"] > div:nth-child(2) a:first-child {
+  display: none;
+}
+
 
 /***** Tags ******/
 
