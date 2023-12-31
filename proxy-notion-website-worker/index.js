@@ -5,8 +5,8 @@ const MY_DOMAIN = 'www.tinymod.xyz';
 const PAGE_TITLE = 'TinyMod';
 const PAGE_DESCRIPTION = 'A Tiny, Mostly 3D Printed, Modular, Customizable, Open-source 3D Printer';
 const PAGE_AUTHOR = 'TwinsieLab';
-const PAGE_COVER = '';
-const PAGE_FAVICON = '';
+const PAGE_COVER = 'https://twinsielab.github.io/site/cover.png';
+const PAGE_FAVICON = 'https://twinsielab.github.io/site/icon.png';
 
 // Google Font https://fonts.google.com
 const GOOGLE_FONT = 'Play';
@@ -137,6 +137,11 @@ async function fetchAndApply(request) {
     return new Response(`Sitemap: https://${MY_DOMAIN}/sitemap.xml`);
   }
 
+  if (url.pathname === '/images/favicon.ico') {
+    return Response.redirect(PAGE_FAVICON, 301);
+  }
+  
+
   if (url.pathname === '/sitemap.xml') {
     const sitemapEntries = SITEMAP.map(slug => `  <url><loc>https://${MY_DOMAIN}/${slug}</loc></url>`).join('\n');
     const siteMap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}</urlset>`;
@@ -244,21 +249,38 @@ class MetaRewriter {
     if (element.getAttribute('property') === 'og:url' || element.getAttribute('name') === 'twitter:url') element.setAttribute('content', MY_DOMAIN);
     if (PAGE_AUTHOR && element.getAttribute('article:author')) element.setAttribute('content', PAGE_AUTHOR);
 
+    // Notion social
     if (element.getAttribute('name') === 'apple-itunes-app') element.remove();
-    if (element.getAttribute('twitter:image')?.endsWith('builtWithNotion.png')) {
+    if (element.getAttribute('name') === 'twitter:site') element.remove();
+
+    // Cover
+    if (element.getAttribute('content')?.endsWith('builtWithNotion.png')) {
+      if (PAGE_COVER) element.setAttribute('content', PAGE_COVER);
+      else element.remove();
+    }
+    if (element.getAttribute('content') === 'https://www.notion.so/images/meta/default.png') {
       if (PAGE_COVER) element.setAttribute('content', PAGE_COVER);
       else element.remove();
     }
   }
 }
 
+class LinkRewriter {
+  element(element) {
+    if (element.getAttribute('rel') === 'apple-touch-icon') element.remove();
+    if (element.getAttribute('rel') === 'shortcut icon' && element.getAttribute('href')?.endsWith('.notion.site/images/favicon.ico')) {
+      if (PAGE_COVER) element.setAttribute('href', PAGE_COVER);
+      else element.remove();
+    }
+  }
+}
 
 
 // <meta property="og:site_name" content="Victor's Notion on Notion">
-// {/* <meta name="article:author" content="Victor">
+// <meta name="article:author" content="Victor">
+// <link rel="shortcut icon" href="https://vitim.notion.site/images/favicon.ico"/>
 // <meta name="twitter:image" content="https://vitim.notion.site/images/meta/builtWithNotion.png">
-// <link rel="shortcut icon" href="https://vitim.notion.site/images/favicon.ico"/> */}
-
+// <meta property="og:image" content="https://www.notion.so/images/meta/default.png"></meta>
 
 
 class HeadRewriter {
@@ -445,6 +467,7 @@ async function appendJavascript(res, ALIAS_TO_ID) {
   return new HTMLRewriter()
     .on('title', new MetaRewriter())
     .on('meta', new MetaRewriter())
+    .on('link', new LinkRewriter())
     .on('head', new HeadRewriter())
     .on('body', new BodyRewriter(ALIAS_TO_ID))
     .transform(res);
