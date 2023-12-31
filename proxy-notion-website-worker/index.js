@@ -38,22 +38,24 @@ const CUSTOM_HTML = `
  * The value on the right is the Notion page ID
  */
 const ALIAS_TO_ID = {
-  '': '96c2251f9d7449e288f17434e6afbacb',
+  // never rename these slugs
+  '': '96c2251f9d7449e288f17434e6afbacb', //home
+  'alpha': '7f0e682bede64903bbeef3b328e350a6',       // permalink
+  'pro': '707be1b81ad14eb5a144916e7aeeaa68',         // permalink
+  'tms': 'e030b06d532c4460a935a7d06911ad74',         // permalink
+  'heatbed-mk1': '3252bf9d20d74f399930506c4933bb7a', // permalink
 
   'sn': 'd0d1308e17624f5f979e4dfd29b0672a',
   'request-sn': '37153907e8b34bf0b8cf84abab6ca5f1',
-  'support': 'e130064ba2de467e8fbb154dd2778143',
+  'donate': 'e130064ba2de467e8fbb154dd2778143',
   'discord': '53c2dab01d17421593aaad68c01afa0b',
   'about-us': '2a671df9bada4a1ca037a4f6aa7fb290',
+  
 
-  'alpha': '7f0e682bede64903bbeef3b328e350a6',
-  'pro': '707be1b81ad14eb5a144916e7aeeaa68',
-  'tms': 'e030b06d532c4460a935a7d06911ad74',
-
-  'printers': '13fca183ef4a40bf9588be8d2aa92232',
   'flow-ratio': '7dd0c36944244133ae463cd6439a793d',
 
-  'heatbed-mk1': '3252bf9d20d74f399930506c4933bb7a',
+
+  'printers': '13fca183ef4a40bf9588be8d2aa92232', // private ish
 };
 
 
@@ -63,10 +65,14 @@ const SITEMAP = [
   'alpha',
   'pro',
   'tms',
+  'heatbed-mk1',
   
   'sn',
-  'support',
+  'request-sn',
+  'discord',
+  'donate',
   'about-us',
+
   'flow-ratio',
 
   'Building-a-TinyMod-7f0e682bede64903bbeef3b328e350a6',
@@ -77,7 +83,6 @@ const SITEMAP = [
   'Configure-and-install-Octoprint-on-OrangePi-c2df3f6004dc407cb8a15926f590f645',
   'Orca-Slicer-c45ba04fa0494a37ad8937a16e7f6d38',
 ];
-
 
 
 /* CONFIGURATION ENDS HERE */
