@@ -4,6 +4,9 @@ const MY_DOMAIN = 'www.tinymod.xyz';
 // SEO
 const PAGE_TITLE = 'TinyMod';
 const PAGE_DESCRIPTION = 'A Tiny, Mostly 3D Printed, Modular, Customizable, Open-source 3D Printer';
+const PAGE_AUTHOR = 'TwinsieLab';
+const PAGE_COVER = '';
+const PAGE_FAVICON = '';
 
 // Google Font https://fonts.google.com
 const GOOGLE_FONT = 'Play';
@@ -85,6 +88,11 @@ const SITEMAP = [
 ];
 
 
+// Replace texts.
+const replace_dict = {
+    'FOOBAR': 'HELLOWORLD',
+}
+
 /* CONFIGURATION ENDS HERE */
 
 const ID_TO_ALIAS = Object.fromEntries(Object.entries(ALIAS_TO_ID).map(([key, val]) => ([val, key])));
@@ -141,10 +149,13 @@ async function fetchAndApply(request) {
   if (url.pathname.startsWith('/app') && url.pathname.endsWith('js')) {
     response = await fetch(url.toString());
     let body = await response.text();
-    response = new Response(body.replace(/www.notion.so/g, MY_DOMAIN).replace(/notion.so/g, MY_DOMAIN), response);
+    body = body.replace(/www.notion.so/g, MY_DOMAIN).replace(/notion.so/g, MY_DOMAIN);
+    // body = await replace_response_text(body, request, response, url);
+    response = new Response(body, response);
     response.headers.set('Content-Type', 'application/x-javascript');
     return response;
   }
+  // API
   else if ((url.pathname.startsWith('/api'))) {
     // Forward API
     response = await fetch(url.toString(), {
@@ -155,20 +166,33 @@ async function fetchAndApply(request) {
       },
       method: 'POST',
     });
-    response = new Response(response.body, response);
+
+    let body;
+    if (response.headers.get('Content-Type')?.match(/application\/json|text\/html/)) {
+      body = await response.text();
+      body = await replace_response_text(body, request, response, url);
+    }
+
+    response = new Response(body || response.body, response);
     response.headers.set('Access-Control-Allow-Origin', '*');
     return response;
-  } 
+  }
+  // Javascript files
   else if (url.pathname.endsWith(".js")) {
     response = await fetch(url.toString());
-    let body = await response.text();
+    
+    let body;
+    body = await response.text();
+    body = await replace_response_text(body, request, response, url);
+   
     response = new Response(
-      body,
+      body || response.body,
       response
     );
     response.headers.set("Content-Type", "application/x-javascript");
     return response;
   }
+  // Redirects
   else if (ALIAS_TO_ID[url.pathname.slice(1)] !== undefined) {
     const pageId = ALIAS_TO_ID[url.pathname.slice(1)];
     return Response.redirect('https://' + MY_DOMAIN + '/' + pageId, 301);
@@ -179,7 +203,14 @@ async function fetchAndApply(request) {
       headers: request.headers,
       method: request.method,
     });
-    response = new Response(response.body, response);
+
+    let body;
+    if (response.headers.get('Content-Type')?.match(/application\/json|text\/html/)) {
+      body = await response.text();
+      body = await replace_response_text(body, request, response, url);
+    }
+    
+    response = new Response(body || response.body, response);
     response.headers.delete('Content-Security-Policy');
     response.headers.delete('X-Content-Security-Policy');
   }
@@ -187,29 +218,48 @@ async function fetchAndApply(request) {
   return appendJavascript(response, ALIAS_TO_ID);
 }
 
+
+async function replace_response_text(body, request, response, url) {
+    let text = body;
+    for (let [search, replace] of Object.entries(replace_dict)) {
+        let re = new RegExp(search, 'g');
+        text = text.replace(re, replace);
+    }
+
+    text = text.replace(/%CURRENTURL%/g, encodeURIComponent(request.headers.get('Referer')));
+
+    return text;
+}
+
+
 class MetaRewriter {
   element(element) {
-    if (PAGE_TITLE !== '') {
-      if (element.getAttribute('property') === 'og:title' || element.getAttribute('name') === 'twitter:title') {
-        element.setAttribute('content', PAGE_TITLE);
-      }
-      if (element.tagName === 'title') {
-        element.setInnerContent(PAGE_TITLE);
-      }
-    }
-    if (PAGE_DESCRIPTION !== '') {
-      if (element.getAttribute('name') === 'description' || element.getAttribute('property') === 'og:description' || element.getAttribute('name') === 'twitter:description') {
-        element.setAttribute('content', PAGE_DESCRIPTION);
-      }
-    }
-    if (element.getAttribute('property') === 'og:url' || element.getAttribute('name') === 'twitter:url') {
-      element.setAttribute('content', MY_DOMAIN);
-    }
-    if (element.getAttribute('name') === 'apple-itunes-app') {
-      element.remove();
+    // Title
+    if (PAGE_TITLE && element.tagName === 'title') element.setInnerContent(PAGE_TITLE);
+    if (PAGE_TITLE && element.getAttribute('property') === 'og:title' || element.getAttribute('name') === 'twitter:title' || element.getAttribute('property') === 'og:site_name') element.setAttribute('content', PAGE_TITLE);
+    
+    // Description
+    if (element.getAttribute('name') === 'description' || element.getAttribute('property') === 'og:description' || element.getAttribute('name') === 'twitter:description') element.setAttribute('content', PAGE_DESCRIPTION);
+    
+    if (element.getAttribute('property') === 'og:url' || element.getAttribute('name') === 'twitter:url') element.setAttribute('content', MY_DOMAIN);
+    if (PAGE_AUTHOR && element.getAttribute('article:author')) element.setAttribute('content', PAGE_AUTHOR);
+
+    if (element.getAttribute('name') === 'apple-itunes-app') element.remove();
+    if (element.getAttribute('twitter:image')?.endsWith('builtWithNotion.png')) {
+      if (PAGE_COVER) element.setAttribute('content', PAGE_COVER);
+      else element.remove();
     }
   }
 }
+
+
+
+// <meta property="og:site_name" content="Victor's Notion on Notion">
+// {/* <meta name="article:author" content="Victor">
+// <meta name="twitter:image" content="https://vitim.notion.site/images/meta/builtWithNotion.png">
+// <link rel="shortcut icon" href="https://vitim.notion.site/images/favicon.ico"/> */}
+
+
 
 class HeadRewriter {
   element(element) {
