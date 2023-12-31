@@ -232,7 +232,7 @@ body.dark [style*="border-bottom: 2px solid"] {
 
 
 /* make links in properties look like buttons */
-#notion-app div[aria-label="Page properties"] a
+#notion-app div[aria-label="Page properties"] a {
     word-break: break-all;
 }
 #notion-app div[aria-label="Page properties"] a:not([href$="#"]) {
