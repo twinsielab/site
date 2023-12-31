@@ -330,6 +330,13 @@ div[role="figure"]:has(div:nth-child(2) a:first-child) [role="button"] {
   display: none !important;
 }
 
+/*   Hide filter button on tables */
+div[role="tablist"] + div > div[role="button"]:nth-child(1) {
+  display: none !important;
+}
+div[role="tablist"] + div > div[role="button"]:nth-child(2) {
+  display: none !important;
+}
 
 
 /***** Tags ******/
