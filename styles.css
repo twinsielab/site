@@ -232,6 +232,9 @@ body.dark [style*="border-bottom: 2px solid"] {
 
 
 /* make links in properties look like buttons */
+#notion-app div[aria-label="Page properties"] a
+    word-break: break-all;
+}
 #notion-app div[aria-label="Page properties"] a:not([href$="#"]) {
   display: inline-block !important;
   padding: 1px 10px;
