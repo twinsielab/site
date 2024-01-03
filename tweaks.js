@@ -52,7 +52,7 @@ const replacements = [
     { re: /__CURRENT_URL__/g, replace: (url, link) => encodeURIComponent(location.href) }
 ];
 
-document.addEventListener('mousedown', onClickLink, {capture:true});
+document.addEventListener('mouseup', onClickLink, {capture:true});
 function onClickLink(event) {
     let targetElement = event.target.closest('a[href]');
     if (targetElement) {
@@ -61,7 +61,7 @@ function onClickLink(event) {
 
         for (const replacement of replacements) {
             if (replacement.re.test(url)) {
-                url = url.replace(re, replacement.replace(url, targetElement));
+                url = url.replace(replacement.re, replacement.replace(url, targetElement));
                 isReplaced = true;
             }
         }
