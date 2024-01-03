@@ -259,6 +259,37 @@ body.dark [style*="border-bottom: 2px solid"] {
 }
 
 
+
+/* Make linked pages on tables properties look like buttons */
+#notion-app div[aria-label="Page properties"] [role="menu"] [role="button"] {
+  display: inline-block !important;
+  padding: 4px 1em;
+  height: auto !important;
+  width: auto !important;
+  font-size: 1.5em !important;
+  background-color: hsl(283.24deg 40.48% 72.94%);
+  color:  hsl(283.24deg 40.48% 22.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 62.94%);
+  box-shadow: 0px 1px 4px rgba(127,127,127,0.9);
+  border-radius: 4px;
+  transition: all 0.15s ease !important;
+}
+#notion-app div[aria-label="Page properties"] [role="menu"] [role="button"]:hover {
+  background-color: hsl(283.24deg 40.48% 82.94%) !important;
+  color:  hsl(283.24deg 40.48% 22.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 72.94%);
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+}
+#notion-app div[aria-label="Page properties"] [role="menu"] [role="button"]:active {
+  background-color: hsl(283.24deg 40.48% 22.94%) !important;
+  color:  hsl(283.24deg 40.48% 72.94%) !important;
+  border: 1px solid hsl(283.24deg 40.48% 72.94%);
+}
+#notion-app div[aria-label="Page properties"] [role="menu"] [role="button"] div.notion-record-icon:has(svg) {
+  display: none; /* hide default page icon */
+}
+
+
 /* make attachment files look like buttons */
 #notion-app .notion-file-block div[role="button"] {
   display: inline-block !important;
