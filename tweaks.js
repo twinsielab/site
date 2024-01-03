@@ -29,7 +29,7 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-document.addEventListener('mousedown', onClickPictureWithLink);
+document.addEventListener('mousedown', onClickPictureWithLink, {capture: true});
 function onClickPictureWithLink(event) {
     let targetElement = event.target.closest('div[role="figure"]');
     if (targetElement) {
