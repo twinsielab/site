@@ -46,15 +46,15 @@ function onClickPictureWithLink(event) {
     }
 }
 
-document.addEventListener('mousedown', onClickLink);
+document.addEventListener('mousedown', onClickLink, {capture:true});
 function onClickLink(event) {
     let targetElement = event.target.closest('a[href]');
     if (targetElement && targetElement.href.match(/__CURRENT_URL__/)) {
-        console.log('Clicked link with special var', targetElement);
         event.preventDefault();
         event.stopPropagation();
+        const url = targetElement.href.replace(/__CURRENT_URL__/, encodeURIComponent(location.href));
+        console.log('Clicked link with special var', targetElement, url);
 
-        const url = targetElement.href.replace(/__CURRENT_URL__/, encodeComponentURI(location.href));
         window.open(url);
         
         return false;
