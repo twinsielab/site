@@ -30,10 +30,8 @@ document.addEventListener('keydown', function(event) {
 
 
 document.addEventListener('mousedown', onClickPictureWithLink);
-
 function onClickPictureWithLink(event) {
     let targetElement = event.target.closest('div[role="figure"]');
-
     if (targetElement) {
         let firstLink = targetElement.querySelector('div:nth-child(2) a:first-child');
         console.log('Clicking picture with link', firstLink);
@@ -45,5 +43,20 @@ function onClickPictureWithLink(event) {
             return false;
 
         }
+    }
+}
+
+document.addEventListener('mousedown', onClickLink);
+function onClickLink(event) {
+    let targetElement = event.target.closest('a[href]');
+    if (targetElement && targetElement.href.match(/__CURRENT_URL__/)) {
+        console.log('Clicked link with special var', targetElement);
+        event.preventDefault();
+        event.stopPropagation();
+
+        const url = targetElement.href.replace(/__CURRENT_URL__/, encodeComponentURI(location.href));
+        window.open(url);
+        
+        return false;
     }
 }
