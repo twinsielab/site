@@ -1,3 +1,6 @@
+//
+// Allow using <= => arrow keys to navigate between database pages
+//
 document.addEventListener('keydown', function(event) {
     const prevButton = document.querySelector('#notion-app .notion-overlay-container div[data-overlay="true"] [role="region"] > div:nth-child(2) > div > div [role=button]:nth-child(4)');
     const nextButton = document.querySelector('#notion-app .notion-overlay-container div[data-overlay="true"] [role="region"] > div:nth-child(2) > div > div [role=button]:nth-child(5)');
@@ -29,6 +32,9 @@ document.addEventListener('keydown', function(event) {
 });
 
 
+//
+// Make Picutures clickable by having links on the captions
+//
 document.addEventListener('click', onClickPictureWithLink, {capture: false});
 function onClickPictureWithLink(e) {
     let figure = e.target.closest('div[role="figure"]');
@@ -36,6 +42,8 @@ function onClickPictureWithLink(e) {
         let firstLink = figure.querySelector('div:nth-child(2) a:first-child');
         console.log('Clicking picture with link', firstLink);
         if (firstLink) {
+
+            // prevent the image preview from opening
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
@@ -50,12 +58,14 @@ function onClickPictureWithLink(e) {
 }
 
 
-
+//
+// Replace magic strings on Links
+//
 const replacements = [
     { re: /__CURRENT_URL__/g, replace: (url, link) => encodeURIComponent(location.href) }
 ];
 
-document.addEventListener('mouseup', onClickLink, {capture:true});
+document.addEventListener('mouseup', onClickLink, {capture:false});
 function onClickLink(event) {
     let targetElement = event.target.closest('a[href]');
     if (targetElement) {
@@ -71,9 +81,15 @@ function onClickLink(event) {
 
         if (isReplaced) {
             console.log('Clicked link with special var', targetElement, url);
-            event.preventDefault();
-            event.stopPropagation();
+
+            // prevent the original url from opening
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            e.cancelBubble=true;
+            
             window.open(url);
+            // location.href = url;
         }
     }
 }
