@@ -46,17 +46,31 @@ function onClickPictureWithLink(event) {
     }
 }
 
+
+
+const replacements = [
+    { re: /__CURRENT_URL__/g, replace: (url, link) => encodeURIComponent(location.href) }
+];
+
 document.addEventListener('mousedown', onClickLink, {capture:true});
 function onClickLink(event) {
     let targetElement = event.target.closest('a[href]');
-    if (targetElement && targetElement.href.match(/__CURRENT_URL__/)) {
-        event.preventDefault();
-        event.stopPropagation();
-        const url = targetElement.href.replace(/__CURRENT_URL__/, encodeURIComponent(location.href));
-        console.log('Clicked link with special var', targetElement, url);
+    if (targetElement) {
+        let url = targetElement.href;
+        let isReplaced = false;
 
-        window.open(url);
-        
-        return false;
+        for (const replacement of replacements) {
+            if (replacement.re.test(url)) {
+                url = url.replace(re, replacement.replace(url, targetElement));
+                isReplaced = true;
+            }
+        }
+
+        if (isReplaced) {
+            console.log('Clicked link with special var', targetElement, url);
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(url);
+        }
     }
 }
