@@ -29,15 +29,18 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-document.addEventListener('mouseup', onClickPictureWithLink, {capture: true});
-function onClickPictureWithLink(event) {
-    let targetElement = event.target.closest('div[role="figure"]');
+document.addEventListener('click', onClickPictureWithLink, {capture: true});
+function onClickPictureWithLink(e) {
+    let targetElement = e.target.closest('div[role="figure"]');
     if (targetElement) {
         let firstLink = targetElement.querySelector('div:nth-child(2) a:first-child');
         console.log('Clicking picture with link', firstLink);
         if (firstLink) {
-            event.preventDefault();
-            event.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            e.cancelBubble=true;
+            
             firstLink.click();
             // location.href = firstLink.href;
             return false;
