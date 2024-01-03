@@ -29,11 +29,11 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-document.addEventListener('click', onClickPictureWithLink, {capture: true});
+document.addEventListener('click', onClickPictureWithLink, {capture: false});
 function onClickPictureWithLink(e) {
-    let targetElement = e.target.closest('div[role="figure"]');
-    if (targetElement) {
-        let firstLink = targetElement.querySelector('div:nth-child(2) a:first-child');
+    let figure = e.target.closest('div[role="figure"]');
+    if (figure) {
+        let firstLink = figure.querySelector('div:nth-child(2) a:first-child');
         console.log('Clicking picture with link', firstLink);
         if (firstLink) {
             e.preventDefault();
