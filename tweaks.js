@@ -66,7 +66,7 @@ const replacements = [
 ];
 
 document.addEventListener('mouseup', onClickLink, {capture:false});
-function onClickLink(event) {
+function onClickLink(e) {
     let targetElement = event.target.closest('a[href]');
     if (targetElement) {
         let url = targetElement.href;
