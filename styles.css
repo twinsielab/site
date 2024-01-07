@@ -373,6 +373,19 @@ div[role="tablist"] + div > div[role="button"]:nth-child(2) {
 }
 
 
+
+/* hide link icon from mention (page img icon) */
+a span:not([role="img"]) svg[role="graphics-symbol"] {
+  display: none !important;
+}
+
+/* hide link icon from mention (page emoji icon) */
+a div div div div div:last-child svg[role="graphics-symbol"] {
+  display: none !important;
+}
+
+
+
 /***** Tags ******/
 
 /* Bold Light Gray */
