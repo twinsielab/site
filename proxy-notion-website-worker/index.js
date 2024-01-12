@@ -8,41 +8,14 @@ const PAGE_AUTHOR = 'TwinsieLab';
 const PAGE_COVER = 'https://twinsielab.github.io/site/cover.png';
 const PAGE_FAVICON = 'https://twinsielab.github.io/site/icon.png';
 
-// Google Font https://fonts.google.com
-const GOOGLE_FONT = 'Play';
-
-const CUSTOM_HEAD = `
-    <link rel="stylesheet" href="https://twinsielab.github.io/site/styles.css">
-`;
-
-const CUSTOM_HTML = `
-    <script src="https://twinsielab.github.io/site/tweaks.js"></script>
-    <script src="https://twinsielab.github.io/site/notes-widget.js"></script>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPF4769LHF"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RPF4769LHF');
-    </script>
-
-    <!-- Posthog -->
-    <script>
-      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-      posthog.init('phc_sm5VYo4NsmzIHsLq3ESA67DWhxXCT97hnobz2d0I95T',{api_host:'https://app.posthog.com'})
-    </script>
-  `;
-
 /*
- * Step 2: enter your URL slug to page ID mapping
+ * Enter your URL slug to page ID mapping
  * The key on the left is the slug (without the slash)
  * The value on the right is the Notion page ID
  */
 const ALIAS_TO_ID = {
-  // never rename these slugs
-  '': '96c2251f9d7449e288f17434e6afbacb', //home
+  // never rename these slugs (they are linked externally, qrcode etc...)
+  '': '96c2251f9d7449e288f17434e6afbacb',            //home
   'alpha': '7f0e682bede64903bbeef3b328e350a6',       // permalink
   'pro': '707be1b81ad14eb5a144916e7aeeaa68',         // permalink
   'tms': 'e030b06d532c4460a935a7d06911ad74',         // permalink
@@ -53,10 +26,8 @@ const ALIAS_TO_ID = {
   'donate': 'e130064ba2de467e8fbb154dd2778143',
   'discord': '53c2dab01d17421593aaad68c01afa0b',
   'about-us': '2a671df9bada4a1ca037a4f6aa7fb290',
-  
 
   'flow-ratio': '7dd0c36944244133ae463cd6439a793d',
-
 
   'printers': '13fca183ef4a40bf9588be8d2aa92232', // private ish
 };
@@ -69,7 +40,7 @@ const SITEMAP = [
   'pro',
   'tms',
   'heatbed-mk1',
-  
+
   'sn',
   'request-sn',
   'discord',
@@ -90,10 +61,56 @@ const SITEMAP = [
 
 // Replace texts.
 const replace_dict = {
-    'FOOBAR': 'HELLOWORLD',
+  'FOOBAR': 'HELLOWORLD',
 }
 
-/* CONFIGURATION ENDS HERE */
+
+// Google Font https://fonts.google.com
+const GOOGLE_FONT = 'Play';
+
+const CUSTOM_CSS = /*css*/`
+  div.notion-topbar > div > div:has(svg path[d^="M2.887"]) { display: none !important; } /* (...) "more" btn */
+  div.notion-topbar > div > div:has(.notionLogo) { display: none !important; } /* Built-with Notion btn */
+  /*
+  div.notion-topbar > div > div:nth-child(3) { display: none !important; } /*comments*/
+  div.notion-topbar > div > div:nth-child(5) { display: none !important; } /* more btn */
+  div.notion-topbar > div > div:nth-child(6) { display: none !important; } /* divider */
+  div.notion-topbar > div > div:nth-child(7) { display: none !important; } /* Try notion button */
+  div.notion-topbar > div > div:nth-child(1n).toggle-mode { display: block !important; }
+  div.notion-topbar-mobile > div:nth-child(4) { display: none !important; }
+  div.notion-topbar-mobile > div:nth-child(1n).toggle-mode { display: block !important; }
+  */
+  div.notion-topbar-mobile > div:has(svg path[d^="M2.887"]) { display: none !important; }
+  div.notion-topbar-mobile > div:has(.notionLogo) { display: block !important; }
+  div.notion-topbar-mobile > div:nth-child(4) { display: none !important; }
+  div.notion-topbar-mobile > div:nth-child(5) { display: none !important; }
+`;
+
+const CUSTOM_HEAD = `
+  <link rel="stylesheet" href="https://twinsielab.github.io/site/styles.css">
+`;
+
+const CUSTOM_HTML = `
+  <script src="https://twinsielab.github.io/site/tweaks.js"></script>
+  <script src="https://twinsielab.github.io/site/notes-widget.js"></script>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPF4769LHF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RPF4769LHF');
+  </script>
+
+  <!-- Posthog -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_sm5VYo4NsmzIHsLq3ESA67DWhxXCT97hnobz2d0I95T',{api_host:'https://app.posthog.com'})
+  </script>
+`;
+
+/********************* CONFIGURATION ENDS HERE *********************/
 
 const ID_TO_ALIAS = Object.fromEntries(Object.entries(ALIAS_TO_ID).map(([key, val]) => ([val, key])));
 
@@ -134,13 +151,17 @@ async function fetchAndApply(request) {
   url.hostname = 'www.notion.so';
 
   if (url.pathname === '/robots.txt') {
-    return new Response(`Sitemap: https://${MY_DOMAIN}/sitemap.xml`);
+    return new Response(`
+      User-agent: *
+      Allow: /
+
+      Sitemap: https://${MY_DOMAIN}/sitemap.xml
+      `.replace(/^ +/gm, ''));
   }
 
-  if (url.pathname === '/images/favicon.ico') {
+  if (url.pathname === '/images/favicon.ico' || url.pathname === '/favicon.ico') {
     return Response.redirect(PAGE_FAVICON, 301);
   }
-  
 
   if (url.pathname === '/sitemap.xml') {
     const sitemapEntries = SITEMAP.map(slug => `  <url><loc>https://${MY_DOMAIN}/${slug}</loc></url>`).join('\n');
@@ -185,11 +206,11 @@ async function fetchAndApply(request) {
   // Javascript files
   else if (url.pathname.endsWith(".js")) {
     response = await fetch(url.toString());
-    
+
     let body;
     body = await response.text();
     body = await replace_response_text(body, request, response, url);
-   
+
     response = new Response(
       body || response.body,
       response
@@ -214,7 +235,7 @@ async function fetchAndApply(request) {
       body = await response.text();
       body = await replace_response_text(body, request, response, url);
     }
-    
+
     response = new Response(body || response.body, response);
     response.headers.delete('Content-Security-Policy');
     response.headers.delete('X-Content-Security-Policy');
@@ -225,27 +246,32 @@ async function fetchAndApply(request) {
 
 
 async function replace_response_text(body, request, response, url) {
-    let text = body;
-    for (let [search, replace] of Object.entries(replace_dict)) {
-        let re = new RegExp(search, 'g');
-        text = text.replace(re, replace);
-    }
+  let text = body;
+  for (let [search, replace] of Object.entries(replace_dict)) {
+    let re = new RegExp(search, 'g');
+    text = text.replace(re, replace);
+  }
 
-    text = text.replace(/%CURRENTURL%/g, encodeURIComponent(request.headers.get('Referer')));
+  text = text.replace(/%CURRENTURL%/g, encodeURIComponent(request.headers.get('Referer')));
 
-    return text;
+  return text;
 }
 
 
+// <meta property="og:site_name" content="Victor's Notion on Notion">
+// <meta name="article:author" content="Victor">
+// <link rel="shortcut icon" href="https://vitim.notion.site/images/favicon.ico"/>
+// <meta name="twitter:image" content="https://vitim.notion.site/images/meta/builtWithNotion.png">
+// <meta property="og:image" content="https://www.notion.so/images/meta/default.png"></meta>
 class MetaRewriter {
   element(element) {
     // Title
     if (PAGE_TITLE && element.tagName === 'title') element.setInnerContent(PAGE_TITLE);
     if (PAGE_TITLE && element.getAttribute('property') === 'og:title' || element.getAttribute('name') === 'twitter:title' || element.getAttribute('property') === 'og:site_name') element.setAttribute('content', PAGE_TITLE);
-    
+
     // Description
     if (element.getAttribute('name') === 'description' || element.getAttribute('property') === 'og:description' || element.getAttribute('name') === 'twitter:description') element.setAttribute('content', PAGE_DESCRIPTION);
-    
+
     if (element.getAttribute('property') === 'og:url' || element.getAttribute('name') === 'twitter:url') element.setAttribute('content', MY_DOMAIN);
     if (PAGE_AUTHOR && element.getAttribute('article:author')) element.setAttribute('content', PAGE_AUTHOR);
 
@@ -275,45 +301,17 @@ class LinkRewriter {
   }
 }
 
-
-// <meta property="og:site_name" content="Victor's Notion on Notion">
-// <meta name="article:author" content="Victor">
-// <link rel="shortcut icon" href="https://vitim.notion.site/images/favicon.ico"/>
-// <meta name="twitter:image" content="https://vitim.notion.site/images/meta/builtWithNotion.png">
-// <meta property="og:image" content="https://www.notion.so/images/meta/default.png"></meta>
-
-
 class HeadRewriter {
   element(element) {
-    if (GOOGLE_FONT !== '') {
+    if (GOOGLE_FONT) {
       element.append(`
-      <!-- Font -->
-      <link href='https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(/ /g, '+')}:Regular,Bold,Italic&display=swap' rel='stylesheet'>
-      <style>* { font-family: "${GOOGLE_FONT}" !important; }</style>
-      `,
-        { html: true }
-      )
+        <!-- Font -->
+        <link href='https://fonts.googleapis.com/css?family=${GOOGLE_FONT.replace(/ /g, '+')}:Regular,Bold,Italic&display=swap' rel='stylesheet'>
+        <style>* { font-family: "${GOOGLE_FONT}" !important; }</style>
+      `, { html: true });
     }
-    // hide "Try Notion" buttons
-    element.append(
-      `
-      <!-- Clean page -->
-      <style>
-        div.notion-topbar > div > div:nth-child(3) { display: none !important; } /*comments*/
-        div.notion-topbar > div > div:nth-child(5) { display: none !important; } /* more btn */
-        div.notion-topbar > div > div:nth-child(6) { display: none !important; } /* divider */
-        div.notion-topbar > div > div:nth-child(7) { display: none !important; } /* Try notion button */
-        div.notion-topbar > div > div:nth-child(1n).toggle-mode { display: block !important; }
-
-        div.notion-topbar-mobile > div:nth-child(4) { display: none !important; }
-        div.notion-topbar-mobile > div:nth-child(1n).toggle-mode { display: block !important; }
-      </style>
-      `,
-      {
-        html: true,
-      }
-    )
-    element.append(CUSTOM_HEAD, { html: true })
+    element.append(`<style>${CUSTOM_CSS}</style>\n`, { html: true });
+    element.append(CUSTOM_HEAD, { html: true });
   }
 }
 
@@ -323,11 +321,11 @@ class BodyRewriter {
     this.ALIAS_TO_ID = ALIAS_TO_ID;
   }
   element(element) {
-    element.append(`
-<!-- INJECTED -->
+    element.append(/*html*/`
+<!-- PATCH NOTION -->
 <script>
 const MY_DOMAIN = '${MY_DOMAIN}';
-const ALIAS_TO_ID = ${ JSON.stringify(this.ALIAS_TO_ID, null, 2) };
+const ALIAS_TO_ID = ${JSON.stringify(this.ALIAS_TO_ID, null, 2)};
 </script>
 
 <script>
@@ -362,12 +360,12 @@ const el = document.createElement('div');
 function onDark() {
   el.innerHTML = '<button id="toggle-light" title="Change to Light Mode" style="background:transparent; border: 1px solid rgba(255, 255, 255, 0.13); border-radius: 4px;">🔆</button>';
   document.body.classList.add('dark');
-  enableConsoleEffectAndSetMode('dark')
+  enableConsoleEffectAndSetMode('dark');
 }
 function onLight() {
   el.innerHTML = '<button id="toggle-dark" title="Change to Dark Mode" style="background:transparent; border: 1px solid rgba(55, 53, 47, 0.16); border-radius: 4px;">🌙</button>';
   document.body.classList.remove('dark');
-  enableConsoleEffectAndSetMode('light')
+  enableConsoleEffectAndSetMode('light');
 }
 function toggle() {
   if (document.body.classList.contains('dark')) {
@@ -386,7 +384,7 @@ function addDarkModeButton(device) {
     nav.appendChild(el);
   }, timeout);
   // get the current theme and add the toggle to represent that theme
-  const currentTheme = JSON.parse(localStorage.getItem('newTheme'))?.mode
+  const currentTheme = JSON.parse(localStorage.getItem('newTheme'))?.mode;
   if (currentTheme) {
     if (currentTheme === 'dark') {
       onDark();
@@ -454,12 +452,9 @@ window.XMLHttpRequest.prototype.open = function () {
   return open.apply(this, [].slice.call(arguments));
 };    
 </script>
+    `, { html: true });
 
-<!-- CUSTOM HTML -->
-${CUSTOM_HTML}
-    `, {
-      html: true
-    });
+    element.append(CUSTOM_HTML, { html: true });
   }
 }
 
