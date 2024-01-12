@@ -92,7 +92,7 @@ const CUSTOM_HEAD = `
 
 const CUSTOM_HTML = `
   <script src="https://twinsielab.github.io/site/tweaks.js"></script>
-  <script src="https://twinsielab.github.io/site/notes-widget.js"></script>
+  <script src="https://twinsielab.github.io/site/notes-widget/notes-widget.js"></script>
   
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPF4769LHF"></script>
